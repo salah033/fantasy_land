@@ -11,3 +11,4 @@ six==1.17.0
 sqlparse==0.5.3
 tablib==3.8.0
 tzdata==2025.2
+python-decouple==3.8
