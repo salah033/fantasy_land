@@ -1,0 +1,39 @@
+{% load static %}
+
+
+<div class="receipt-container">
+    <h1 class="page-title">CLOSE DRAWER</h1>
+    
+    <div id="printable-area" class="receipt">
+        <link rel="stylesheet" href="{% static 'css/receipt.css' %}">
+        <img src="{% static 'images/logo_BW.png' %}" alt="Logo" class="logo">
+
+        <div class="receipt-info">
+            <p>Lac 1</p>
+            <p>Tel: 97352222</p>
+
+            <p>Date: {{ date|date:"Y/m/d" }}</p>
+            <p>Drawer Closure Summary</p>
+          
+        </div>
+
+        <div class="receipt-items">
+            {% for item in summary %}
+            <div class="receipt-item">
+                <p class="item-name">
+                    {{ item.total_sold }}x {{ item.product__name }}
+                </p>
+                <p class="item-price">Subtotal: {{ item.total_revenue }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="total">
+            <p>Total: {{ total }}</p>
+        </div>
+    </div>
+
+    <button onclick="window.print()" class="print-button">🖨️ Print Receipt</button>
+</div>
+
+

@@ -1,0 +1,109 @@
+<h3>Customer Orders Section</h3>
+
+{% if customer_orders %}
+  {% for corder in customer_orders %}
+    <div class="cusorder-banner">
+      <a href="{% url 'EDIT_MEMO' corder.type|lower corder.id %}">
+        <div class="cusorder-info">
+
+          <p class="highlight-name">👤 CUSTOMER: {{ corder.customer_exist.customer_name }}</p>
+          <p class="highlight-phone">📞 PHONE: {{ corder.customer_exist.customer_phone }}</p>
+          <p class="highlight-product">📦 PRODUCT: {{ corder.product_order }}</p>
+
+          <p>🆔 CUSTOMER ID: {{ corder.customer_exist.id }}</p>
+          <p>👷‍♂️ EMPLOYEE: {{ corder.employee }}</p>
+          <p>🔢 QUANTITY: {{ corder.quantity_order }}</p>
+
+          <p><strong>💰 PAID:</strong> 
+            {% if corder.is_paid %}
+              <span class="badge badge-green">YES – {{ corder.amount_paid }} DT</span>
+            {% else %}
+              <span class="badge badge-red">NO</span>
+            {% endif %}
+          </p>
+
+          <p><strong>✅ DONE:</strong> 
+            {% if corder.is_done %}
+              <span class="badge badge-green">COMPLETED</span>
+            {% else %}
+              <span class="badge badge-red">NOT YET</span>
+            {% endif %}
+          </p>
+
+          <p>📅 DATE: {{ corder.order_date|default:"No date provided" }}</p>
+          <p>🗒️ NOTES: {{ corder.body|default:"No notes provided" }}</p>
+          <p>🕓 CREATED: {{ corder.date_create|default:"No date provided" }}</p>
+
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No Orders found.</p>
+{% endif %}
+
+<style>
+.cusorder-banner {
+  background: #ffffff;
+  border-left: 6px solid #2196f3;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin: 20px 0;
+  transition: transform 0.2s ease;
+}
+
+.cusorder-banner:hover {
+  transform: scale(1.01);
+}
+
+.cusorder-banner a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 24px 28px;
+}
+
+.cusorder-info p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #444;
+}
+
+.highlight-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.highlight-phone {
+  font-size: 18px;
+  font-weight: 600;
+  color: #16a085;
+}
+
+.highlight-product {
+  font-size: 18px;
+  font-weight: 600;
+  color: #8e44ad;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.badge-green {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.badge-red {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+</style>

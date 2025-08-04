@@ -1,0 +1,17 @@
+{% for prod in low_products %}
+  <div class="product-line">
+    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a>
+    {% if prod.category %}
+    {{ prod.category.cat_name }}
+    {% else %}
+    No Category
+    {% endif %}
+    {% if prod.quantity > 0 %}
+      <span class="low-stock">Only {{ prod.quantity }} remaining</span>
+    {% else %}
+      <span class="out-of-stock">Out of stock</span>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>No products in this category</p>
+{% endfor %}

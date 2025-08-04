@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt #{{ sale.id }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/receipt.css' %}">
+</head>
+<body>  
+    <img src="{% static 'images/logo_BW.png' %}" alt="Logo" class="logo">
+
+    <div class="receipt-info">
+        <p>Lac 1</p>
+        <p>Tel: 97352222</p>
+        <p>Date: {{ sale.date|date:"Y/m/d H:i" }}</p>
+        <p>Receipt #: {{ sale.id }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>U.Price</th>
+                <th class="right-align">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in sale.items.all %}
+            <tr>
+                <!--<td>{{ item.product.name }}</td>-->
+                <td>{{ item.product.name|slice:":20" }}{% if item.product.name|length > 20 %}..{% endif %}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit_price }}</td>
+                <td class="right-align">{{ item.subtotal }} DT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total: {{ sale.total_amount }} DT
+    </div>
+
+    <div class="footer">
+        <p>Merci pour votre achat !</p>
+        <p>Fantasy Land - Lac 1</p>
+    </div>
+
+    <button onclick="window.print()">🖨️ Print</button>
+    <br>
+    <button onclick="window.location.href = document.referrer">🔙 Back</button>
+    <br>
+    <button onclick="window.close()">❌ Close</button>
+
+</body>
+</html>
+    

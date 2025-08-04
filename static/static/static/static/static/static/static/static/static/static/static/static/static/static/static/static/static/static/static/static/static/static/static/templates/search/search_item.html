@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+<h1>🔍 SEARCH</h1> 
+<h2>Search Results for "{{ query }}" in {{ search_type|title }}</h2>
+
+<div class="product-banner">        
+    {% if results %}
+        {% for item in results %}
+            {% if search_type == 'products' %} 
+                <a href="{% url 'PRODUCT_DETAIL' item.id %}">
+                    <div class="product-card">
+                        <img src="{{ item.photo.url }}" alt="{{ item.name }}">
+                        <div class="product-info">
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.price }} DT</p>
+                        </div>
+                    </div>
+                </a>
+            {% elif search_type == 'suppliers' %}
+                <a href="{% url 'SUPPLIER_DETAIL' item.id %}">
+                    <div class="product-card">
+                        <img src="{{ item.photo.url }}" alt="{{ item.name }}">
+                        <div class="product-info">
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.location }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+{% endblock content %}

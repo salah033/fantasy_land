@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>HOME_PAGE</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Point of Sale</title>
+</head>
+<body>
+  <h2>Point of Sale</h2>
+  
+  <input
+    type="text"
+    id="barcodeInput"
+    class="barcode-input"
+    placeholder="Scan barcode here..."
+    autofocus
+    autocomplete="off"
+  />
+  
+  <table id="saleTable" class="sale-table" aria-label="Products added to sale">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price (DT)</th>
+        <th>Quantity</th>
+        <th>Subtotal (DT)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  
+  <div id="totalAmount" class="total-amount">Total: 0 DT</div>
+
+</body>
+</html>
+
+
+
+
+
+{% endblock content %}

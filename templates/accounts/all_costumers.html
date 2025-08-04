@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class = "product_page_title">All COSTUMERS</h1>   
+<div class="product-banner">     
+    
+    {% for cos in costumer %} 
+    <a href="{% url 'COSTUMER_DETAILS' cos.id %}" class="cust-link">
+            <div class="costemer-card">
+                    <div class="costumer-info">
+                        <h3>NAME : {{ cos.customer_name }}</h3>
+                        <p>ID: {{ cos.id }}</p>
+                        <p>PHONE : {{ cos.customer_phone }} </p>
+                    </div>
+            </div>
+        </a>
+       
+    {% endfor %}
+</div>
+<style>
+#copy-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+#copy-toast.show {
+  display: block;
+  opacity: 1;
+}
+.costemer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border-left: 6px solid #020c2e;
+  padding: 16px 24px;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.costemer-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.costumer-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.costumer-info p {
+  margin: 4px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.cust-link {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
+{% endblock content %}

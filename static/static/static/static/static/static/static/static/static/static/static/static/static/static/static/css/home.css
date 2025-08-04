@@ -1,0 +1,76 @@
+.home-wrapper {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.flex-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.list-scroll {
+  flex: 1;
+  max-height: 300px;  /* fixed height for scroll */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.chart-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-line,
+.game-entry {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.product-line a,
+.game-entry h5 {
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.product-line a:hover {
+  text-decoration: underline;
+}
+
+.low-stock {
+  color: #d9534f; /* red-ish */
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.out-of-stock {
+  color: #999;
+  font-style: italic;
+  margin-left: 10px;
+}
+
+.sold-amount {
+  color: #28a745; /* green */
+  margin-left: 10px;
+}
+
+h1, h3, h4, h5 {
+  margin: 0 0 10px 0;
+}
+
+h4 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}

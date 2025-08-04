@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="product-detail-container">
+    
+    <div class="product-detail-image">
+        <img src="{{ supplier.photo.url }}" alt="{{ supplier.name }}">
+    </div>
+
+    <div class="product-detail-info">
+        <h2>{{ supplier.name }}</h2>
+
+        {% if supplier.phone %}
+            <p class="info-label">{{ supplier.phone }}</p>
+        {% else %}
+            <p class="info-missing">No phone available for this supplier</p>
+        {% endif %}
+
+        {% if supplier.email %}
+            <p class="info-label">{{ supplier.email }}</p>
+        {% else %}
+            <p class="info-missing">No email available for this supplier</p>
+        {% endif %}
+
+        {% if products %}
+            <p class="section-title">Purchased products:</p>
+            <ul class="product-list">
+                {% for product in products %}
+                    <li><a href="{% url 'PRODUCT_DETAIL' product.id %}">{{ product.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="info-missing">No products purchased from this supplier.</p>
+        {% endif %}
+
+        <a href="{% url 'SUPPLIERS' %}" class="back-button">← Back to all suppliers</a>
+    </div>
+
+</div>
+{% endblock %}

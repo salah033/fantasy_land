@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class = "product_page_title">All PRODUCTS</h1>   
+<div class="product-banner">     
+    
+    {% for prod in product %} 
+    
+        <a href="{% url 'PRODUCT_DETAIL' prod.id %}">
+            <div class="product-card">
+                <img src = "{{prod.photo.url}}" alt ="{{prod.title}}"/>
+                    <div class="product-info">
+                        <h3>{{ prod.name }}</h3>
+                        <p>{{ prod.price }} DT</p>
+                    </div>
+            </div>
+        </a>
+       
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>{% block title %}Fantasy Land | {{ request.resolver_match.url_name }}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/left_panel.css' %}">
+
+    <link rel="icon" type="image/x-icon" href="{% static 'images/LOGO_no_BG.ico' %}">
+</head>
+<body>
+
+
+      <div class="fl-sidebar-container">
+    <!-- Toggle Button 
+    <button class="fl-sidebar-toggle" onclick="document.body.classList.toggle('fl-sidebar-collapsed')">☰</button>-->
+
+    <!-- Left Sidebar -->
+<!-- Left Sidebar -->
+<nav class="fl-sidebar">
+  <ul class="fl-sidebar-nav">
+    <div class="logo">
+     
+      <a href="{% url 'HOME' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+      </a>
+    </div>
+
+    <li><a href="{% url 'PRODUCTS' %}">🛒 Products</a></li>
+    <li><a href="{% url 'SUPPLIERS' %}">📦 Suppliers</a></li>
+    <li><a href="{% url 'SHOP' %}">🏬 Shop</a></li>
+
+    <!-- Sales Section -->
+    <li class="has-submenu">
+      <a href="{% url 'MAKE_SALE' %}">💰 Sales</a>
+      <ul class="submenu">
+        <li><a href="{% url 'ALL_RECEIPTS' %}">📄Receipts</a></li>
+        <li><a href="{% url 'CLOSE_DRAWER' %}">📜Close Drawer</a></li>
+      </ul>
+    </li>
+    
+  </ul>
+</nav>
+    
+
+    <!-- Main App Content -->
+    <div class="fl-main-wrapper">
+      <div class="page-container">
+      
+        <!-- Header -->
+    
+
+
+
+
+  <div class="page-container">
+    <!-- Header -->
+    <header>
+        <div class="container">
+
+            <!-- Left Section: Logo + Navigation -->
+            <div class="left-section">
+
+
+            </div>
+
+            <!-- Center: Search Forms -->
+            <div class="search-area">
+
+                <!-- Product/Supplier Search -->
+                <form class="search-form" action="{% url 'SEARCH' %}" method="get">
+                    <p>Search in: </p>
+                    <select name="type" class="search-select">
+                        <option value="products" selected>Products</option>
+                        <option value="suppliers">Suppliers</option>
+                    </select>
+                    <input type="text" name="q" placeholder="Search..." required>
+                    <button type="submit">🔍</button>
+                </form>
+
+                <!-- Category Search -->
+                <form class="search-form" action="{% url 'CAT_DETAILS' %}" method="get">
+                    <p>Search by Categories</p>
+                    <select name="category" class="search-select">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">🔍</button>
+                </form>
+
+            </div>
+
+            <!-- Right Navigation -->
+            <nav class="right-nav">
+                <ul>
+                    <!--<li><a href="{% url 'ABOUT' %}">About</a></li>-->
+                    <!--<li><a href="{% url 'HOME' %}">Log out</a></li>-->
+                        
+                    {% if user.is_authenticated %}
+                        <li><a href="/admin/">Admin</a></li>
+                        <li><a href="{% url 'USER_DASHBOARD' %}">Welcome, {{ user.username }}</a></li>
+                        <!--<li><a href="{% url 'ACCOUNTS_LOGOUT' %}" id="logout-link">Log Out</a></li>-->
+                    {% else %}
+                        <li><a href="{% url 'ACCOUNTS_LOGIN' %}">Login</a></li>
+                    {% endif %}
+                    
+                    
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Fantasy Land. All rights reserved.</p>
+    </footer>
+</div>
+
+
+</div>
+</div>
+</div>
+<!--<div id="logout-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+     background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:1000;">
+    <div style="background:white; padding:20px; border-radius:10px; text-align:center; max-width:300px;">
+        <p>Are you sure you want to logout?</p>
+        <button id="confirm-logout" style="margin:5px;">Yes</button>
+        <button id="cancel-logout" style="margin:5px;">Cancel</button>
+    </div>
+</div>
+<script>
+    const csrftoken = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/confirm_logout.js' %}"></script>
+-->
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% block content %}
+<div class="home-wrapper">
+    <h1>HOME_PAGE</h1>
+
+    <h3>LOW QUANTITY PRODUCTS</h3>
+
+    {% if low_products %}
+        {% for prod in low_products %}
+            {% if prod.quantity > 0 %}
+                <div class="product-line">
+                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
+                    {{ prod.category.cat_name }} /
+                    <span class="low-stock">Only {{ prod.quantity }} remaining</span>
+                </div>
+            {% else %}
+                <div class="product-line">
+                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
+                    {{ prod.category.cat_name }} /
+                    <span class="out-of-stock">Out of stock</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>NO_LOW_P</p>
+    {% endif %}
+
+    <h3>BEST SELLER PRODUCTS</h3>
+
+    {% if best_seller %}
+        {% for prod in best_seller %}
+            <div class="product-line">
+                <a href="{% url 'PRODUCT_DETAIL' prod.product.id %}">{{ prod.product.name }}</a> |
+                {{ prod.product.category.cat_name }} —
+                <span class="sold-amount">{{ prod.quantity }} Pieces sold</span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nobest_seller</p>
+    {% endif %}
+</div>
+{% endblock content %}

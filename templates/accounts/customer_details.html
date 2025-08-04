@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="costumer-detail-container">
+  <div class="costumer-detail-info">
+    <h2>{{ costumer.customer_name }}</h2>
+    <p class="id">ID: {{ costumer.id }}</p>
+    <p class="phone">PHONE : {{ costumer.customer_phone }}</p>
+    {% if costumer.body %}
+      <p class="note">NOTES : {{ costumer.body }}</p>
+    {% else %}
+      <p class="note">No Notes to show</p>
+    {% endif %}
+    <p class="date-create">Created on: {{ costumer.date_create }}</p>
+    <a href="{% url 'EDIT_MEMO' costumer.type|lower costumer.id %}" class="edit-link">EDIT</a>
+
+    <div class="order-section">
+      <h2>Orders:</h2>
+      {% if orders %}
+        {% for order in orders %}
+        <a href="{% url 'EDIT_MEMO' order.type|lower order.id %}" class="order-link">
+          <div class="{% if order.is_done %}order-card-true{% else %}order-card-false{% endif %}">
+            <p class="order-product">Product: {{ order.product_order }}</p>
+            <p class="order-quantity_order">Quantity: {{ order.quantity_order }}</p>
+            <p class="{% if order.is_paid %}order-is_paid-true{% else %}order-is_paid-false{% endif %}">
+              Paid: {% if order.is_paid %}✅{% else %}❌{% endif %}
+            </p>
+            {% if order.is_paid %}
+            <p class="order-amount_paid">Amount Paid: {{ order.amount_paid }}DT</p>
+            {% endif %}
+            <p>
+              Done: {% if order.is_done %}✅{% else %}❌{% endif %}
+            </p>
+            <p class="order-order_date">Order Date: {{ order.order_date }}</p>
+            <p class="order-body">Notes: {{ order.body }}</p>
+            <p class="order-date_create">Created: {{ order.date_create }} By {{ order.employee }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      {% else %}
+        <p class="order-product-null">No Orders to show for this customer</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.costumer-detail-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.costumer-detail-info h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: #01010f;
+  font-weight: 700;
+}
+
+.costumer-detail-info p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.costumer-detail-info .id,
+.costumer-detail-info .phone,
+.costumer-detail-info .note,
+.costumer-detail-info .date-create {
+  font-weight: 500;
+}
+
+.costumer-detail-info .note {
+  font-style: italic;
+  color: #777;
+}
+
+.order-product-null {
+  font-style: italic;
+  color: #999;
+  padding-top: 10px;
+}
+
+.order-section {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.order-card-true {
+  background-color: #c4e6cc;
+  padding: 18px 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid #25ad0a;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+.order-card-false {
+  background-color: #e6c4c4;
+  padding: 18px 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid #f00c0c;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.order-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.order-card .order-product {
+  font-weight: 600;
+  color: #333;
+}
+
+.order-card .order-is_paid-true {
+  font-weight: 600;
+  color: #2196f3;
+}
+
+.order-card .order-is_paid-false {
+  font-weight: 600;
+  color: #f32121;
+}
+
+.edit-link {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.edit-link:hover {
+  background-color: #0056b3;
+}
+
+.order-link {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
+
+{% endblock content %}

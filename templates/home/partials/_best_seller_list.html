@@ -1,0 +1,16 @@
+{% for prod in best_seller %}
+  <div class="product-line">
+    <a href="{% url 'PRODUCT_DETAIL' prod.product_id %}">{{ prod.product__name }}</a>
+    {% if prod.product__category__name %}
+    {{ prod.product__category__name }}
+    {% else %}
+    No Category
+    {% endif %}
+    
+    
+    
+    <span class="sold-amount">{{ prod.total_quantity_sold }} Pieces sold</span>
+  </div>
+{% empty %}
+  <p>No best sellers in this category</p>
+{% endfor %}

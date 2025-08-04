@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Fantasy Land | {{ request.resolver_match.url_name }}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+   <header>
+        <div class="container">
+            <div class="left-section">
+                <div class="logo">
+                    <a href="/">
+                        <img src="{% static 'images/logo.png' %}" alt="Logo">
+                    </a>
+                </div>
+                <ul class="mid-nav">
+                    <li><a href="/products">&#128230; Products</a></li>
+                    <li><a href="/suppliers">&#128666; Suppliers</a></li>
+                </ul>
+            </div>
+            <nav class="right-nav">
+                <ul>
+                    <li><a href="/home">&#127968; Home</a></li>
+                    <li><a href="/home/about/">&#128712; About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page-specific content will go here -->
+     <br>
+     <br>
+   
+    <main>
+    {% block content %}
+    {% endblock content%}
+    </main>
+    <br>
+    <br>
+    <br>
+
+
+    <footer>
+    <p>&copy; 2025 Fantasy Land. All rights reserved.</p>
+    </footer>
+</body>
+</html>

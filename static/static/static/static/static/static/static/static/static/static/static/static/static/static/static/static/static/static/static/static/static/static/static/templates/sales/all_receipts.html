@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/receipts.css' %}">
+
+<h1 class="title">Receipts Page</h1>
+
+<!-- 🔍 Filter Form -->
+<form method="get" class="filter-form">
+    <div class="form-group">
+        <label for="number_input">Sale ID or Quantity:</label>
+        <input type="number" id="number_input" name="id_input" value="{{ request.GET.number }}" placeholder="Enter number">
+    </div>
+
+    <div class="form-group">
+        <label for="start_date">From:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}">
+    </div>
+
+    <div class="form-group">
+        <label for="end_date">To:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}">
+    </div>
+
+    <div class="form-buttons">
+        <button type="submit" class="btn filter-btn">Filter</button>
+        <a href="{% url 'ALL_RECEIPTS' %}" class="btn reset-btn">Reset</a>
+    </div>
+</form>
+
+<!-- 🧾 Sales List -->
+<div class="sales-list">
+    {% for sale in sales %}
+        <a href="/sales/receipt/{{ sale.id }}/" class="sale-box">
+            <h3>Sale ID: {{ sale.id }} | {{ sale.date|date:"Y/m/d H:i" }}</h3>
+            <ul>
+                {% for item in sale.items.all %}
+                    <li>{{ item.product.name }} — Qty: {{ item.quantity }} — {{ item.unit_price }} DT</li>
+                {% endfor %}
+                <li><strong>Total:</strong> {{ sale.total_amount }} DT</li>
+            </ul>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}

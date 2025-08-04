@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<h1 class="page-title">🛒 Sales Page</h1>
+
+<input
+  type="text" 
+  id="barcodeInput"
+  class="barcode-input"
+  placeholder="🔍 Scan barcode here or reference ... "
+  autofocus
+  autocomplete="off"
+/>
+
+<table id="saleTable" class="sale-table" aria-label="Products added to sale">
+  <thead>
+    {% csrf_token %}
+    <tr>
+      <th class="col-delete">❌</th>
+      <th>Product</th>
+      <th>Price (DT)</th>
+      <th>Quantity</th>
+      <th>Subtotal (DT)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div id="totalAmount" class="total-amount">Total: 0 DT</div>
+
+<button id="confirmSaleBtn" class="confirm-btn">✅ Confirm Sale</button>
+
+<!-- ✅ Stylish Modal HTML -->
+<div id="customModal" class="modal">
+  <div class="modal-content">
+    <p id="modalMessage"></p>
+    <div class="modal-actions">
+      <button id="modalCancel">Cancel</button>
+      <button id="modalConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/barcode-scan.js' %}"></script>
+
+{% endblock content %}

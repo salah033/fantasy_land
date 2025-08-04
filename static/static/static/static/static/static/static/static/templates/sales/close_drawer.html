@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="page-title">CLOSE DRAWER</h1>
+<div class="container_close">
+  {% for item in summary %}
+    <div class="summary-item">
+    <ul>
+    <li> <p>{{ item.total_sold }}x {{ item.product__name|slice:":20" }}{% if item.product__name|length > 20 %}..{% endif %}</p></li> 
+    <li> <p>{{ item.total_revenue }} DT</p></li> 
+    </ul>
+    </div>
+  {% endfor %}
+  <p class="total-amount">Total: {{ total }} DT</p>
+</div>
+<a href="{% url 'CLOSE_DRAWER_CON' %}" class="confirm-btn">CONFIRM CLOSING</a></p>
+{% endblock content %}

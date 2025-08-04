@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>All_SUPPLIERS</h1>
+
+<div class="product-banner">        
+    {% for supp in supplier %} 
+    {% if supp.active %}
+    <a href="{% url 'SUPPLIER_DETAIL' supp.id %}">
+        <div class="product-card">
+            <img src = "{{supp.photo.url}}" alt ="{{supp.title}}"/>
+                <div class="product-info">
+                    <h3>{{ supp.name }}</h3>
+                    <p>{{ supp.location }}</p>
+                </div>
+        </div>
+    </a>
+    {%endif%}    
+    {% endfor %}
+</div>
+{% endblock content %}

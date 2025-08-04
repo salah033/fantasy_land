@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script>
+  console.log("🔥 INLINE JavaScript is working");
+</script>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<script src="{% static 'js/charts.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="home-wrapper">
+  <h1>HOME PAGE</h1>
+
+  <!-- LOW STOCK section -->
+  <h3>📉 Low Stock Products</h3>
+  <form id="low-stock-form">
+            <label for="low-stock-category">Filter by Category:</label>
+            <select id="low-stock-category" name="category">
+              <option value="">All</option>
+              {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.name }}</option>
+              {% endfor %}
+            </select>
+          </form>
+  <div class="flex-row">
+    <div class="list-scroll">
+      <!-- LOW STOCK FILTER -->
+          
+           <div id="low-stock-list">
+          {% include 'home/partials/_low_stock_list.html' %}
+              </div>
+      
+    </div>
+    <div class="chart-container">
+      <canvas id="lowStockChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <!-- BEST SELLER section -->
+  <h3>📈 Best Seller Products</h3>
+  <form id="best-seller-form">
+        <label for="best-seller-category">Filter by Category:</label>
+        <select id="best-seller-category" name="category">
+          <option value="">All</option>
+          {% for cat in categories %}
+            <option value="{{ cat.id }}">{{ cat.cat_name }}</option>
+          {% endfor %}
+        </select>
+      </form>
+  <div class="flex-row">
+    <div class="list-scroll">
+      <!-- BEST SELLER FILTER -->
+      
+      <div id="best-seller-list">
+          {% include 'home/partials/_best_seller_list.html' %}
+      </div>
+      
+    </div>
+    <div class="chart-container">
+      <canvas id="bestSellerChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <!-- RELEASED and UPCOMING side by side -->
+  <h3>Trending Released&Upcoming Games</h3>
+  <div class="flex-row">
+    <div class="list-scroll">
+      <h4>Released Games</h4>
+      {% if released %}
+        {% for game in released %}
+          <div class="game-entry">
+            <h5>{{ game.name }}</h5>
+            <p>Platforms: {{ game.platforms|join:", " }}</p>
+            <p>Released: {{ game.released }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No released games</p>
+      {% endif %}
+    </div>
+
+    <div class="list-scroll">
+      <h4>Upcoming Games</h4>
+      {% if upcoming %}
+        {% for game in upcoming %}
+          <div class="game-entry">
+            <h5>{{ game.name }}</h5>
+            <p>Platforms: {{ game.platforms|join:", " }}</p>
+            <p>Release date: {{ game.released }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No upcoming games</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!--<script>
+  const lowLabels = {{ low_labels|safe }};
+  const lowValues = {{ low_values|safe }};
+  const bestLabels = {{ best_labels|safe }};
+  const bestValues = {{ best_values|safe }};
+
+  renderLowStockChart(lowLabels, lowValues);
+  renderBestSellerChart(bestLabels, bestValues);
+</script>-->
+<script>
+  window.lowLabels = {{ low_labels|safe }};
+  window.lowValues = {{ low_values|safe }};
+  window.bestLabels = {{ best_labels|safe }};
+  window.bestValues = {{ best_values|safe }};
+</script>
+
+
+{% endblock content %}

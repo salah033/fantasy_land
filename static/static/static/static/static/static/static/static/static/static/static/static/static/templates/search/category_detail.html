@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>SEARCH</h1> 
+
+<h2>Search Results for {{ category }}</h2>
+<div class="product-banner">        
+
+    {%if results %}
+        {% for item in results %}
+                
+
+                    <a href="{% url 'PRODUCT_DETAIL' item.id %}">
+                    <div class="product-card">
+                        <img src = "{{item.photo.url}}" alt ="{{item.title}}"/>
+                            <div class="product-info">
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.price }} DT</p>
+                            </div>
+                    </div>
+                    </a>
+
+                
+        {% endfor %}           
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</div>
+{% endblock content %}

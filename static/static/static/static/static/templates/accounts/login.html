@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<div id="loginBox" class="login-container {% if messages %}shake{% endif %}">
+    <h2>Login</h2>
+
+    {% if next %}
+        <p class="login-info">Please login to access: <strong>{{ next }}</strong></p>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="login-error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="login-form">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock content %}

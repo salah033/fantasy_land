@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="product-detail-container">
+    
+    <div class="product-detail-image">
+        <!-- Added width="300" to make the image smaller -->
+        <img src="{{ product.photo.url }}" alt="{{ product.name }}" width="300">
+    </div>
+
+    <div class="product-detail-info">
+        <h2>{{ product.name }}</h2>
+        <p class="price">{{ product.price }}</p>
+        
+        
+            <p class="description">REFERENCE: {{ product.reference }}</p>
+            <p class="description">BAR CODE: {{ product.bare_code }}</p>
+            <p class="description">QUANTITY: {{ product.quantity }}</p>
+                            
+                <p class="description">CATEGORY: 
+                <a href="{% url 'CAT_DETAILS' %}?category={{ product.category.id }}">{{ product.category.cat_name }}</p>
+                </a>
+        {% if product.designation %}
+            <p class="description">DESIGNATION: {{ product.designation }}</p>
+        {% else %}
+            <p class="description">No designation available for that product</p>
+        {% endif %}
+        {% if product.supplier %}
+            <p class="description">Purchased From: 
+            <a href="{% url 'SUPPLIER_DETAIL' product.supplier.id %}">{{ product.supplier.name }}</p></a>
+        {% else %}
+            <p class="description">No_Supplier_Provided</p>
+        {% endif %}
+        {% if product.purchase_date %}
+            <p class="description">Purchased On: {{ product.purchase_date }}</p>
+        {% endif %}
+
+        <a href="{% url 'PRODUCTS' %}" class="back-button">← Back to all products</a>
+    </div>
+
+</div>
+{% endblock %}
