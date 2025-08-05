@@ -1,44 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>HOME_PAGE</h1>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Point of Sale</title>
-</head>
-<body>
-  <h2>Point of Sale</h2>
-  
-  <input
-    type="text"
-    id="barcodeInput"
-    class="barcode-input"
-    placeholder="Scan barcode here..."
-    autofocus
-    autocomplete="off"
-  />
-  
-  <table id="saleTable" class="sale-table" aria-label="Products added to sale">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Price (DT)</th>
-        <th>Quantity</th>
-        <th>Subtotal (DT)</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  
-  <div id="totalAmount" class="total-amount">Total: 0 DT</div>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-</body>
-</html>
+<h1>HOME PAGE</h1>
 
+<div class="product-section">
+    <h3>LOW QUANTITY PRODUCTS</h3>
+    
+    {% if low_products %}
+    <ul class="product-list">
+        {% for prod in low_products %}
+        <li class="product-item low-stock-item">
+            <div class="product-info">
+                <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{prod.name}}</a>
+                <span class="category">{{prod.category.cat_name}}</span>
+            </div>
+            <div class="status-line">
+                {% if prod.quantity > 0 %}
+                    <span class="low-quantity">Only {{prod.quantity}} remaining</span>
+                {% else %}
+                    <span class="out-of-stock">Out of stock</span>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">All products are well stocked</p>
+    {% endif %}
+</div>
 
-
-
+<div class="product-section">
+    <h3>BEST SELLER PRODUCTS</h3>
+    
+    {% if best_seller %}
+    <ul class="product-list">
+        {% for prod in best_seller %}
+        <li class="product-item best-seller-item">
+            <div class="product-info">
+                <a href="{% url 'PRODUCT_DETAIL' prod.product.id %}">{{prod.product.name}}</a>
+                <span class="category">{{prod.product.category.cat_name}}</span>
+            </div>
+            <div class="status-line">
+                <span class="best-seller-quantity">{{prod.quantity}} pieces sold</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No sales data available</p>
+    {% endif %}
+</div>
 
 {% endblock content %}

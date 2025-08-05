@@ -8,4 +8,3 @@ urlpatterns = [
     path('logout/', views.accounts_logout, name='ACCOUNTS_LOGOUT'),   
     path('dashboard/', views.user_dashboard, name='USER_DASHBOARD')
     ]
-

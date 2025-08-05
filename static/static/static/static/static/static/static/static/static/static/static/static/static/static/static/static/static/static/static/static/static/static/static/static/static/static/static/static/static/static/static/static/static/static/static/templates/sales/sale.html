@@ -15,6 +15,7 @@
 
 <table id="saleTable" class="sale-table" aria-label="Products added to sale">
   <thead>
+    {% csrf_token %}
     <tr>
       <th class="delete-btn" >Del</th>
       <th>Product</th>
@@ -27,6 +28,8 @@
 </table>
 
 <div id="totalAmount" class="total-amount">Total: 0 DT</div>
+
+<button id="confirmSaleBtn" class="confirm-btn">✅ Confirm</button>
 
 <script src="{% static 'js/barcode-scan.js' %}"></script>
 

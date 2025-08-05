@@ -5,7 +5,7 @@
 
 <div class="product-banner">        
     {% for supp in supplier %} 
-    {% if supp.active %}
+    <a href="{% url 'SUPPLIER_DETAIL' supp.id %}">
         <div class="product-card">
             <img src = "{{supp.photo.url}}" alt ="{{supp.title}}"/>
                 <div class="product-info">
@@ -13,7 +13,7 @@
                     <p>{{ supp.location }}</p>
                 </div>
         </div>
-    {%endif%}    
+    </a>
     {% endfor %}
 </div>
 {% endblock content %}

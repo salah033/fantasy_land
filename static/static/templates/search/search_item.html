@@ -28,10 +28,140 @@
                         </div>
                     </div>
                 </a>
+            {% elif search_type == 'costumers' %}
+            <div class="costemer-card">
+    <a href="/accounts/costumer/{{item.id}}">
+      <div class="costumer-info">
+        <h3>NAME: {{ item.customer_name }}</h3>
+        <p>ID: <span class="costumer-id">{{ item.id }}</span></p>
+        <p>PHONE: {{ item.customer_phone }}</p>
+      </div>
+    </a>
+    <button onclick="copyText(this)">Copy ID</button>
+  </div>
+                    
             {% endif %}
         {% endfor %}
     {% else %}
         <p>No results found.</p>
     {% endif %}
 </div>
+<div id="copy-toast" style="display: none;">Copied to clipboard!</div>
+<script>
+function copyText(button) {
+  // Find the closest .costemer-card element to the button
+  const card = button.closest('.costemer-card');
+
+  if (!card) return;
+
+  // Find the span with class "costumer-id" inside that card
+  const span = card.querySelector('.costumer-id');
+
+  if (!span) return;
+
+  const textToCopy = span.textContent.trim();
+
+  // Copy to clipboard
+  navigator.clipboard.writeText(textToCopy)
+    .then(() => {
+      const toast = document.getElementById("copy-toast");
+      toast.classList.add("show");
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.style.display = "none", 300);
+      }, 2000);
+    })
+    .catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
+}
+</script>
+<style>
+#copy-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+#copy-toast.show {
+  display: block;
+  opacity: 1;
+}
+
+.costemer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border-left: 6px solid #020c2e;
+  padding: 16px 24px;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.costemer-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.costumer-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.costumer-info p {
+  margin: 4px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#copy-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+#copy-toast.show {
+  display: block;
+  opacity: 1;
+}
+</style>
+
 {% endblock content %}

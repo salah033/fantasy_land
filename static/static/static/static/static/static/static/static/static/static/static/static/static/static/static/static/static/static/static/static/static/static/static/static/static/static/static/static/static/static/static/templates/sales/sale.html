@@ -2,22 +2,27 @@
 {% load static %}
 
 {% block content %}
-<h1>SALES_PAGE</h1>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<h1 class="page-title">🛒 Sales Page</h1>
 
 <input
   type="text" 
   id="barcodeInput"
   class="barcode-input"
-  placeholder="Scan barcode here..."
+  placeholder="🔍 Scan barcode here..."
   autofocus
   autocomplete="off"
 />
+
+<a href="{% url 'ALL_RECEIPTS' %}" class="receipt-link">📄 View All Receipts</a>
 
 <table id="saleTable" class="sale-table" aria-label="Products added to sale">
   <thead>
     {% csrf_token %}
     <tr>
-      <th class="delete-btn" >Del</th>
+      <th class="col-delete">❌</th>
       <th>Product</th>
       <th>Price (DT)</th>
       <th>Quantity</th>
@@ -29,10 +34,8 @@
 
 <div id="totalAmount" class="total-amount">Total: 0 DT</div>
 
-<button id="confirmSaleBtn" class="confirm-btn">✅ Confirm</button>
+<button id="confirmSaleBtn" class="confirm-btn">✅ Confirm Sale</button>
 
 <script src="{% static 'js/barcode-scan.js' %}"></script>
-
-
 
 {% endblock content %}

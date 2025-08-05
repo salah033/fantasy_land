@@ -8,6 +8,7 @@ from django.urls import reverse
 from .models import UserNote, UserShopOrder, UserCustomer, UserCustomerOrder
 from datetime import datetime
 from django.template.loader import render_to_string
+from django.db.utils import IntegrityError
 
 @login_required
 def accounts_home(request) :
@@ -37,10 +38,9 @@ def accounts_register(request) :
     return render (request , 'accounts/register.html')
 
 @login_required
-def accounts_logout (request) : 
-    print ("LOGOUT_WORKING")
+def accounts_logout(request):
+    print("LOGOUT_WORKING")
     if request.method == "POST":
-        
         logout(request)
         return JsonResponse({'redirect_url': reverse('ACCOUNTS_LOGIN')})
     else:
@@ -100,13 +100,17 @@ def submit_user_note (request) :
         elif selected_type == 'customer' :
             cus_name = request.POST.get('customer_name','')
             cus_phone = request.POST.get('customer_phone','')
+
             if not cus_phone or not cus_phone : 
                 return HttpResponse("Plese fill the Required fields*")
             body = request.POST.get('customer_notes','')
-            form = UserCustomer.objects.create(employee=user_name,
+            try : 
+                form = UserCustomer.objects.create(employee=user_name,
                                                customer_name=cus_name,
                                                customer_phone=cus_phone,
                                                body=body)
+            except IntegrityError : 
+                return HttpResponse("Phone number already exist")
             form.save()
         
         else : 
@@ -119,10 +123,17 @@ def submit_user_note (request) :
             else:
                 order_date = None
             
-            cus_name = request.POST.get('customer_order_name','')
-            cus_phone = request.POST.get('customer_order_phone','')
+            try:
+                cus_id = int(request.POST.get('costumer_ID', None) or None)
+            except ValueError:
+                cus_id = None
+            if not isinstance(cus_id, int): 
+                return HttpResponse("Plese fill the COSTUMER ID FIELD WITH NUMBERS ONLY***")
+            
+            costomer = get_object_or_404(UserCustomer, id=cus_id)            
+
             product = request.POST.get('order_product','')
-            if not cus_name or not cus_phone or not product: 
+            if not product or not cus_id : 
                 return HttpResponse("Plese fill the Required fields*")
             ispaid = request.POST.get('is_paid') == 'on' 
             if not ispaid : 
@@ -143,8 +154,7 @@ def submit_user_note (request) :
             except ValueError:
                 quantity = 1
             form = UserCustomerOrder.objects.create(employee=user_name,
-                                                    customer_name=cus_name,
-                                                    customer_phone=cus_phone,
+                                                    customer_exist=costomer,
                                                     product_order=product,
                                                     is_paid=ispaid,
                                                     amount_paid=amount,
@@ -162,27 +172,27 @@ def show_memos (request) :
     if request.method == 'POST':
         category = request.POST.get('category')
 
-        if category == 'note':
-            notes = UserNote.objects.all().order_by('-date_create')
+        if category == 'notes':
+            notes = UserNote.objects.all().order_by('is_done')
             html = render_to_string('accounts/partials/notes_section.html', {'notes': notes})
             return JsonResponse({'html': html})
 
-        elif category == 'shop_order':
-            shop_orders = UserShopOrder.objects.all().order_by('-date_create')
+        elif category == 'shop_orders':
+            shop_orders = UserShopOrder.objects.all().order_by('is_done', 'date_create')
             html = render_to_string('accounts/partials/shop_orders_section.html', {"shop_orders" : shop_orders})
             return JsonResponse({'html': html})
 
-        elif category == 'customer' : 
+        elif category == 'customers' : 
             customers = UserCustomer.objects.all().order_by('-date_create')
             html = render_to_string('accounts/partials/customers_section.html', {'customers': customers})
             return JsonResponse({'html': html})
         else : 
-            customer_orders = UserCustomerOrder.objects.all().order_by('-date_create')
+            customer_orders = UserCustomerOrder.objects.all().order_by('is_done', 'date_create')
             html = render_to_string('accounts/partials/customer_orders_section.html', {'customer_orders': customer_orders})
             return JsonResponse({'html': html})
 
     return render(request, "accounts/show_memo.html")
-    
+
 @csrf_exempt
 @login_required
 def edit_memo (request, category, pk) : 
@@ -257,16 +267,26 @@ def edit_memo (request, category, pk) :
             if not name or not phone : 
                 return HttpResponse ("Please fill the required fields*")
 
-            obj.customer_name = name
-            obj.customer_phone = phone
-            obj.body = notes
-            obj.save()
-
+            try : 
+                obj.customer_name = name
+                obj.customer_phone = phone
+                obj.body = notes
+                obj.save()
+            except IntegrityError : 
+                return HttpResponse("Phone number already exist")
+            
             return redirect('SHOW_MEMO')
         
         else : 
-            name = request.POST.get('customer_name')
-            phone = request.POST.get('customer_phone')
+            cus_id = request.POST.get('costumer_id') 
+            try:
+                cus_id = int(request.POST.get('costumer_id', None) or None)
+            except ValueError:
+                cus_id = None
+            if not isinstance(cus_id, int): 
+                return HttpResponse("Plese fill the COSTUMER ID FIELD WITH NUMBERS ONLY***")
+            
+            costomer = get_object_or_404(UserCustomer, id=cus_id)       
             product = request.POST.get('product_name') 
             #quantity = request.POST.get('quantity') 
             try:
@@ -298,11 +318,10 @@ def edit_memo (request, category, pk) :
             notes = request.POST.get('order_order_notes') 
             isdone = request.POST.get('is_done_customer_order') == 'on'
 
-            if not name or not phone or not product : 
+            if not product or not cus_id : 
                 return HttpResponse ("Please fill the required fields*")
 
-            obj.customer_name = name
-            obj.customer_phone = phone
+            obj.customer_exist = costomer
             obj.product_order = product
             obj.quantity_order = quantity
             obj.is_paid = ispaid
@@ -315,3 +334,24 @@ def edit_memo (request, category, pk) :
             return redirect('SHOW_MEMO')
 
     return render (request, 'accounts/edit_memo.html', context)
+
+@login_required
+def show_costumers (request) : 
+
+    all_costumers = {'costumer' : UserCustomer.objects.all()}
+
+    return render (request, "accounts/all_costumers.html", all_costumers)
+
+@login_required
+def customer_details (request, pk) : 
+
+    costumer = get_object_or_404(UserCustomer, pk=pk)
+    orders = [order for order in costumer.existant_costumer.all().order_by('is_done', '-date_create')]
+    costumer.customer_name = costumer.customer_name.capitalize()
+    for item in orders : 
+        print (item.date_create)
+
+    context = {'costumer' : costumer,
+               'orders' : orders}
+
+    return render (request, 'accounts/customer_details.html', context)

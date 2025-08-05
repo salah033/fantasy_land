@@ -1,10 +1,91 @@
 EDIT_MEMO
+<p>Please make sure to fill fields with (*)</p>
+
+<style>
+/* Common form list styling */
+form ul {
+  list-style: none;
+  padding-left: 0;
+  max-width: 520px;
+  margin: 15px 0 30px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form ul li {
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inputs and textareas styling */
+form ul li input[type="text"],
+form ul li input[type="number"],
+form ul li input[type="date"],
+form ul li textarea {
+  margin-top: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  resize: vertical; /* for textarea */
+}
+
+/* Focus effect */
+form ul li input[type="text"]:focus,
+form ul li input[type="number"]:focus,
+form ul li input[type="date"]:focus,
+form ul li textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #f9fbff;
+}
+
+/* Checkboxes */
+form ul li input[type="checkbox"] {
+  margin-top: 8px;
+  width: auto;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+/* Submit button styling */
+form button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  form ul {
+    max-width: 100%;
+  }
+}
+
+</style>
+
 
 {% if object.type|lower == 'note' %}
 <form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
   {% csrf_token %}
 <ul>
-    <li>Note : <textarea name="body" rows="10" cols="50" required>{{ object.body }}</textarea></li>
+    <li>Note : *<textarea name="body" rows="10" cols="50" required>{{ object.body }}</textarea></li>
     <li>Done : <input type="checkbox" id="isdonenote" name="is_done_note" autocomplete="off"
             {% if object.is_done %}checked{% endif %}></li>
 </ul>
@@ -18,7 +99,7 @@ EDIT_MEMO
   {% csrf_token %}
   <ul>
 
-    <li>Product: <input type="text" id="productName" name="product_name" value="{{ object.prod_order_name }}" required>*</li>    
+    <li>Product: *<input type="text" id="productName" name="product_name" value="{{ object.prod_order_name }}" required></li>    
     <li>Quantity : <input type="number" id="quantity" name="quantity" value="{{ object.prod_order_qty }}" ></li>
     <li>Date : <input type="date" id="orderDate" name="shop_order_date" value="{{ object.order_date|date:'Y-m-d'}}"></li>
     <li>Notes :<textarea id="shopordernotes" name="shop_order_notes">{{ object.body }}</textarea></li>
@@ -35,8 +116,8 @@ EDIT_MEMO
   {% csrf_token %}
 
   <ul>
-    <li>Name: <input type="text" id="customerName" name="customer_name" value="{{ object.customer_name }}" required>*</li>    
-    <li>Phone: <input type="text" id="customerPhone" name="customer_phone" value="{{ object.customer_phone }}" required>*</li>    
+    <li>Name: *<input type="text" id="customerName" name="customer_name" value="{{ object.customer_name }}" required></li>    
+    <li>Phone: *<input type="text" id="customerPhone" name="customer_phone" value="{{ object.customer_phone }}" required></li>    
     <li>Notes :<textarea id="customerNotes" name="customer_notes">{{ object.body }}</textarea></li>
   </ul>
 
@@ -47,17 +128,18 @@ EDIT_MEMO
 {% else %}
 <form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
   {% csrf_token %}
-
+<p>Please note that 'Amount Paid' field will work only if 'Paid in advance' is checked otherwise 0 will be submitted (**) </p>
   <ul>
   
-    <li>Name: <input type="text" id="ordercustomerName" name="customer_name" value="{{ object.customer_name }}" required>*</li>    
-    <li>Phone: <input type="text" id="ordercustomerPhone" name="customer_phone" value="{{ object.customer_phone }}" required>*</li>    
-    <li>Product: <input type="text" id="orderproductName" name="product_name" value="{{ object.product_order }}" required>*</li>    
+    <li>Name: <input type="text" id="ordercustomerName" name="customer_name" value="{{ object.customer_exist.customer_name }}" disabled ></li>    
+    <li>Phone: <input type="text" id="ordercustomerPhone" name="customer_phone" value="{{ object.customer_exist.customer_phone }}" disabled ></li>  
+    <li>Costumer ID: *<input type="text" id="costumer_id" name="costumer_id" value="{{ object.customer_exist.id }}" required></li>     
+    <li>Product: *<input type="text" id="orderproductName" name="product_name" value="{{ object.product_order }}" required></li>    
     <li>Quantity : <input type="number" id="ordercusquantity" name="quantity" value="{{ object.quantity_order }}" ></li>
     <li>Date : <input type="date" id="cusorderDate" name="customer_order_date" value="{{ object.order_date|date:'Y-m-d'}}"></li>
-    <li>Paid in advance <input type="checkbox" id="isdonecusorder" name="is_paid_customer_order" autocomplete="off"
+    <li>Paid in advance **<input type="checkbox" id="isdonecusorder" name="is_paid_customer_order" autocomplete="off"
             {% if object.is_paid %}checked{% endif %}></li>
-    <li>Amount paid : <input type="number" id="cusorderquantity" name="amount_customer" value="{{ object.amount_paid }}" ></li>
+    <li>Amount paid : **<input type="number" id="cusorderquantity" name="amount_customer" value="{{ object.amount_paid }}" ></li>
     <li>Notes :<textarea id="cusordernotes" name="order_order_notes">{{ object.body }}</textarea></li>
     <li>Done : <input type="checkbox" id="isdonecusorder" name="is_done_customer_order" autocomplete="off"
             {% if object.is_done %}checked{% endif %}></li>
@@ -66,6 +148,7 @@ EDIT_MEMO
       <br>
   <button type="submit">Save</button>
 </form>
+
 
 
     {% endif %}

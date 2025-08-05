@@ -1,18 +1,67 @@
-<h3>📝 Costumer Section</h3>
+<h3>Customer Section</h3>
+
 {% if customers %}
   {% for customer in customers %}
+    <div class="customer-banner">
       <a href="{% url 'EDIT_MEMO' customer.type|lower customer.id %}">
-            <div class="customer-card">
-                    <div class="customer-info">
+        <div class="customer-info">
 
-    <p>{{ customer.customer_name }}</p>
-    <p>{{ customer.customer_phone }}</p>
+          <p class="highlight-name">👤 NAME: {{ customer.customer_name }}</p>
+          <p class="highlight-phone">📞 PHONE: {{ customer.customer_phone }}</p>
+          <p>🆔 ID: {{ customer.id }}</p>
+          <p class="highlight-notes">🗒️ NOTES: {{ customer.body|default:"No notes provided" }}</p>
+          <p>🕓 CREATED: {{ customer.date_create|default:"No date provided" }}</p>
 
-                        </div>
-            </div>
-            
-        </a>
+        </div>
+      </a>
+    </div>
   {% endfor %}
 {% else %}
   <p>No Customer found.</p>
 {% endif %}
+
+<style>
+.customer-banner {
+  background: #ffffff;
+  border-left: 6px solid #3498db;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin: 20px 0;
+  transition: transform 0.2s ease;
+}
+
+.customer-banner:hover {
+  transform: scale(1.01);
+}
+
+.customer-banner a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 24px 28px;
+}
+
+.customer-info p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #444;
+}
+
+.highlight-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.highlight-phone {
+  font-size: 18px;
+  font-weight: 600;
+  color: #16a085;
+}
+
+.highlight-notes {
+  font-size: 16px;
+  font-weight: 600;
+  color: #8e44ad;
+}
+</style>

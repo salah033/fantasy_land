@@ -3,15 +3,25 @@
 
 <h1 class="page-title">CLOSE DRAWER</h1>
 <div class="container_close">
-  {% for item in summary %}
-    <div class="summary-item">
-    <ul>
-    <li> <p>{{ item.total_sold }}x {{ item.product__name|slice:":20" }}{% if item.product__name|length > 20 %}..{% endif %}</p></li> 
-    <li> <p>{{ item.total_revenue }} DT</p></li> 
-    </ul>
-    </div>
-  {% endfor %}
-  <p class="total-amount">Total: {{ total }} DT</p>
+  {% if not total %}
+    <p>No Sales Made Yet</p>
+  {% else %}
+    {% for item in summary %}
+      <div class="summary-item">
+        <ul>
+          <li>
+            <p>{{ item.total_sold }}x {{ item.product__name|slice:":20" }}{% if item.product__name|length > 20 %}..{% endif %}</p>
+          </li>
+          <li>
+            <p>{{ item.total_revenue }} DT</p>
+          </li>
+        </ul>
+      </div>
+    {% endfor %}
+    <p class="total-amount">Total: {{ total|floatformat:2 }} DT</p>
+  {% endif %}
 </div>
-<a href="{% url 'CLOSE_DRAWER_CON' %}" class="confirm-btn">CONFIRM CLOSING</a></p>
+
+<a href="{% url 'CLOSE_DRAWER_CON' %}" class="confirm-btn">CONFIRM CLOSING</a>
+
 {% endblock content %}

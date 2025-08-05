@@ -39,7 +39,7 @@ class UserCustomer (models.Model) :
     type = models.CharField(default='Customer') 
     employee = models.ForeignKey(User, related_name='user_customer', on_delete=models.CASCADE)
     customer_name = models.CharField() 
-    customer_phone = models.CharField() 
+    customer_phone = models.CharField(unique=True) 
     body = models.TextField(blank=True, null=True)  
     date_create = models.DateField(default=now, blank=True, null=True)
     
@@ -53,8 +53,6 @@ class UserCustomerOrder (models.Model) :
     type = models.CharField(default='Customer_Order') 
     employee = models.ForeignKey(User, related_name='user_customer_order', on_delete=models.CASCADE)    
     customer_exist = models.ForeignKey(UserCustomer, related_name='existant_costumer', on_delete=models.CASCADE, null=True, blank=True)
-    customer_name = models.CharField() 
-    customer_phone = models.CharField() 
     product_order = models.CharField() 
     quantity_order = models.IntegerField(default=1)
     is_paid = models.BooleanField(default=False)
@@ -65,7 +63,7 @@ class UserCustomerOrder (models.Model) :
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.type} from {self.employee} | Name : {self.customer_name} ,Phone : {self.customer_phone} ,Product : {self.product_order}"
+        return f"{self.type} from {self.employee} | Name : {self.customer_exist.customer_name}  | Phone : {self.customer_exist.customer_phone} | Product : {self.product_order}"
     
     class Meta : 
         verbose_name = 'Customer Order'

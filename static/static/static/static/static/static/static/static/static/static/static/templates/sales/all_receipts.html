@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/receipts.css' %}">
 
 <h1 class="title">Receipts Page</h1>
 
 <!-- 🔍 Filter Form -->
 <form method="get" class="filter-form">
     <div class="form-group">
-        <label for="number_input">Sale ID or Quantity:</label>
-        <input type="number" id="number_input" name="id_input" value="{{ request.GET.number }}" placeholder="Enter number">
+        <label for="number_input">Sale ID:</label>
+        <input type="number" id="number_input" name="id_input" value="{{ request.GET.number }}" placeholder="Enter sale id">
     </div>
 
     <div class="form-group">

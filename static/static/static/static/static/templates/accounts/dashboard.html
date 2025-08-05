@@ -6,7 +6,9 @@
 {% if user.is_authenticated %}
   <p>Welcome, {{ user.username }}</p>
   <p><a href="{% url 'ACCOUNTS_LOGOUT' %}" id="logout-link">Log Out</a></p>
-{% endif %}
+{% endif %} 
+  <p><a href="{% url 'MEMO_FORM' %}" id="memo-link">Add a memo</a></p>
+  <p><a href="{% url 'SHOW_MEMO' %}" id="memo-link">Show memo's</a></p>
 
 <!-- Logout Modal -->
 <div id="logout-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
@@ -23,5 +25,7 @@
 
 <!-- JS -->
 <script src="{% static 'js/confirm_logout.js' %}"></script>
+
+
 
 {% endblock content %}

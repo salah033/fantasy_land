@@ -18,7 +18,7 @@
             <p class="description">QUANTITY: {{ product.quantity }}</p>
                             
                 <p class="description">CATEGORY: 
-                <a href="{% url 'CAT_DETAILS' %}?category={{ product.category.id }}">{{ product.category }}</p>
+                <a href="{% url 'CAT_DETAILS' %}?category={{ product.category.id }}">{{ product.category.cat_name }}</p>
                 </a>
         {% if product.designation %}
             <p class="description">DESIGNATION: {{ product.designation }}</p>

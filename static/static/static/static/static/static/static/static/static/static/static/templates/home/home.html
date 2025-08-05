@@ -1,45 +1,103 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<script src="{% static 'js/charts.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <div class="home-wrapper">
-    <h1>HOME_PAGE</h1>
+  <h1>HOME PAGE</h1>
 
-    <h3>LOW QUANTITY PRODUCTS</h3>
-
-    {% if low_products %}
+  <!-- LOW STOCK section -->
+  <h3>📉 Low Stock Products</h3>
+  <div class="flex-row">
+    <div class="list-scroll">
+      {% if low_products %}
         {% for prod in low_products %}
+          <div class="product-line">
+            <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a>
+            {{ prod.category.cat_name }}
             {% if prod.quantity > 0 %}
-                <div class="product-line">
-                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
-                    {{ prod.category.cat_name }} /
-                    <span class="low-stock">Only {{ prod.quantity }} remaining</span>
-                </div>
+              <span class="low-stock">Only {{ prod.quantity }} remaining</span>
             {% else %}
-                <div class="product-line">
-                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
-                    {{ prod.category.cat_name }} /
-                    <span class="out-of-stock">Out of stock</span>
-                </div>
+              <span class="out-of-stock">Out of stock</span>
             {% endif %}
+          </div>
         {% endfor %}
-    {% else %}
+      {% else %}
         <p>NO_LOW_P</p>
-    {% endif %}
+      {% endif %}
+    </div>
+    <div class="chart-container">
+      <canvas id="lowStockChart" width="400" height="200"></canvas>
+    </div>
+  </div>
 
-    <h3>BEST SELLER PRODUCTS</h3>
-
-    {% if best_seller %}
+  <!-- BEST SELLER section -->
+  <h3>📈 Best Seller Products</h3>
+  <div class="flex-row">
+    <div class="list-scroll">
+      {% if best_seller %}
         {% for prod in best_seller %}
-            <div class="product-line">
-                <a href="{% url 'PRODUCT_DETAIL' prod.product.id %}">{{ prod.product.name }}</a> |
-                {{ prod.product.category.cat_name }} —
-                <span class="sold-amount">{{ prod.quantity }} Pieces sold</span>
-            </div>
+          <div class="product-line">
+            <a href="{% url 'PRODUCT_DETAIL' prod.product_id %}">{{ prod.product__name }}</a>
+            {{ prod.product__category__name }}
+            <span class="sold-amount">{{ prod.total_quantity_sold }} Pieces sold</span>
+          </div>
         {% endfor %}
-    {% else %}
-        <p>Nobest_seller</p>
-    {% endif %}
+      {% else %}
+        <p>No best seller</p>
+      {% endif %}
+    </div>
+    <div class="chart-container">
+      <canvas id="bestSellerChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- RELEASED and UPCOMING side by side -->
+  <h3>Trending Released Games</h3>
+  <div class="flex-row">
+    <div class="list-scroll">
+      <h4>Released Games</h4>
+      {% if released %}
+        {% for game in released %}
+          <div class="game-entry">
+            <h5>{{ game.name }}</h5>
+            <p>Platforms: {{ game.platforms|join:", " }}</p>
+            <p>Released: {{ game.released }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No released games</p>
+      {% endif %}
+    </div>
+
+    <div class="list-scroll">
+      <h4>Upcoming Games</h4>
+      {% if upcoming %}
+        {% for game in upcoming %}
+          <div class="game-entry">
+            <h5>{{ game.name }}</h5>
+            <p>Platforms: {{ game.platforms|join:", " }}</p>
+            <p>Release date: {{ game.released }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No upcoming games</p>
+      {% endif %}
+    </div>
+  </div>
 </div>
+
+<script>
+  const lowLabels = {{ low_labels|safe }};
+  const lowValues = {{ low_values|safe }};
+  const bestLabels = {{ best_labels|safe }};
+  const bestValues = {{ best_values|safe }};
+
+  renderLowStockChart(lowLabels, lowValues);
+  renderBestSellerChart(bestLabels, bestValues);
+</script>
+
 {% endblock content %}

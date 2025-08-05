@@ -1,20 +1,51 @@
-<h2>Sale Receipt #{{ sale.id }}</h2>
-<p>Date: {{ sale.date }}</p>
-<table>
-    <thead>
-        <tr>
-            <th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in sale.items.all %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.unit_price }}</td>
-            <td>{{ item.subtotal }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<p><strong>Total: {{ sale.total_amount }} DT</strong></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt #{{ sale.id }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/receipt.css' %}">
+</head>
+<body>  
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+
+    <div class="receipt-info">
+        <p>Lac 1</p>
+        <p>Tel: 97352222</p>
+        <p>Date: {{ sale.date|date:"Y/m/d H:i" }}</p>
+        <p>Receipt #: {{ sale.id }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th class="right-align">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in sale.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="right-align">{{ item.subtotal }} DT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total: {{ sale.total_amount }} DT
+    </div>
+
+    <div class="footer">
+        <p>Merci pour votre achat !</p>
+        <p>Fantasy Land - Lac 1</p>
+    </div>
+
+    <button onclick="window.print()">🖨️ Imprimer</button>
+
+</body>
+</html>
+    

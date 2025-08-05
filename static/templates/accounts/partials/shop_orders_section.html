@@ -1,17 +1,98 @@
-<h3>📝 Shop Orders Section</h3>
+<h3>Shop Orders Section</h3>
+
 {% if shop_orders %}
   {% for order in shop_orders %}
-  <a href="{% url 'EDIT_MEMO' order.type|lower order.id %}">
-    <div class="shororder-card">
-    <div class="shororder-info">
-    <p>{{ order.prod_order_name }}</p>
-    <p>{{ order.prod_order_qty }}</p>
+    <div class="shoporder-banner">
+      <a href="{% url 'EDIT_MEMO' order.type|lower order.id %}">
+        <div class="shoporder-info">
 
-                    </div>
-            </div>
-          </a>
-        
+          <p><strong>👷‍♂️ EMPLOYEE:</strong> {{ order.employee }}</p>
+          <p class="highlight-product">📦 PRODUCT: {{ order.prod_order_name }}</p>
+          <p class="highlight-qty">🔢 QUANTITY: {{ order.prod_order_qty }}</p>
+
+          <p>📅 ORDER DATE: {{ order.order_date|default:"No date provided" }}</p>
+          <p>🕓 CREATED: {{ order.date_create|default:"No date provided" }}</p>
+
+          <p><strong>✅ DONE:</strong> 
+            {% if order.is_done %}
+              <span class="badge badge-green">YES</span>
+            {% else %}
+              <span class="badge badge-red">NO</span>
+            {% endif %}
+          </p>
+
+          <p>🗒️ NOTES: {{ order.body|default:"No notes provided" }}</p>
+
+        </div>
+      </a>
+    </div>
   {% endfor %}
 {% else %}
   <p>No Orders found.</p>
 {% endif %}
+
+
+<style>
+.shoporder-banner {
+  background: #ffffff;
+  border-left: 6px solid #9b59b6;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin: 20px 0;
+  transition: transform 0.2s ease;
+}
+
+.shoporder-banner:hover {
+  transform: scale(1.01);
+}
+
+.shoporder-banner a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 22px 26px;
+}
+
+.shoporder-info p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #444;
+}
+
+.shoporder-info strong {
+  color: #222;
+}
+
+.highlight-product {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.highlight-qty {
+  font-size: 16px;
+  font-weight: 600;
+  color: #16a085;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.badge-green {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.badge-red {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+</style>
+

@@ -1,58 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% block content %}
+<div class="home-wrapper">
+    <h1>HOME_PAGE</h1>
 
-<h1>HOME PAGE</h1>
-
-<div class="product-section">
     <h3>LOW QUANTITY PRODUCTS</h3>
-    
+
     {% if low_products %}
-    <ul class="product-list">
         {% for prod in low_products %}
-        <li class="product-item low-stock-item">
-            <div class="product-info">
-                <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{prod.name}}</a>
-                <span class="category">{{prod.category.cat_name}}</span>
-            </div>
-            <div class="status-line">
-                {% if prod.quantity > 0 %}
-                    <span class="low-quantity">Only {{prod.quantity}} remaining</span>
-                {% else %}
+            {% if prod.quantity > 0 %}
+                <div class="product-line">
+                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
+                    {{ prod.category.cat_name }} /
+                    <span class="low-stock">Only {{ prod.quantity }} remaining</span>
+                </div>
+            {% else %}
+                <div class="product-line">
+                    <a href="{% url 'PRODUCT_DETAIL' prod.id %}">{{ prod.name }}</a> |
+                    {{ prod.category.cat_name }} /
                     <span class="out-of-stock">Out of stock</span>
-                {% endif %}
-            </div>
-        </li>
+                </div>
+            {% endif %}
         {% endfor %}
-    </ul>
     {% else %}
-    <p class="empty-state">All products are well stocked</p>
+        <p>NO_LOW_P</p>
     {% endif %}
-</div>
 
-<div class="product-section">
     <h3>BEST SELLER PRODUCTS</h3>
-    
+
     {% if best_seller %}
-    <ul class="product-list">
         {% for prod in best_seller %}
-        <li class="product-item best-seller-item">
-            <div class="product-info">
-                <a href="{% url 'PRODUCT_DETAIL' prod.product.id %}">{{prod.product.name}}</a>
-                <span class="category">{{prod.product.category.cat_name}}</span>
+            <div class="product-line">
+                <a href="{% url 'PRODUCT_DETAIL' prod.product.id %}">{{ prod.product.name }}</a> |
+                {{ prod.product.category.cat_name }} —
+                <span class="sold-amount">{{ prod.quantity }} Pieces sold</span>
             </div>
-            <div class="status-line">
-                <span class="best-seller-quantity">{{prod.quantity}} pieces sold</span>
-            </div>
-        </li>
         {% endfor %}
-    </ul>
     {% else %}
-    <p class="empty-state">No sales data available</p>
+        <p>Nobest_seller</p>
     {% endif %}
 </div>
-
 {% endblock content %}

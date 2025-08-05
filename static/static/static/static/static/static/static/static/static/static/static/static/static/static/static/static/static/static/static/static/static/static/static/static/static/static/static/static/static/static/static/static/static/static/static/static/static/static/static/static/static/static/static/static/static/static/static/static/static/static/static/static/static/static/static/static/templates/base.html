@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Fantasy Land{% endblock %}</title>
+    <title>{% block title %}Fantasy Land | {{ request.resolver_match.url_name }}{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
@@ -12,7 +12,7 @@
     <header>
         <div class="logo">
              <a href="/">
-                <img src="{% static 'home/images/logo.png' %}" alt="Logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo img">
             </a>
         </div>
         <nav>

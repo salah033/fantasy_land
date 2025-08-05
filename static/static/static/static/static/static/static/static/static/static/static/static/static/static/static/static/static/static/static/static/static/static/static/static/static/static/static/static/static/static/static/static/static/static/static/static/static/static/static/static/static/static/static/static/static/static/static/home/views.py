@@ -9,6 +9,8 @@ import json
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from decouple import config
+
 
 @login_required
 def home_redirect (request) :
@@ -41,7 +43,7 @@ def home_page (request) :
     two_months_later = today + relativedelta(months=3)
     start = '2018-01-01'
 
-    API_KEY = '0322c45dbaa84f9a9322d64b327b4323'
+    API_KEY = config('API_KEY')
 
     released_url = (f"https://api.rawg.io/api/games?key={API_KEY}&dates={start},{today}&platforms=7,18,187&ordering=-added&page_size=40")
     upcoming_url = (f"https://api.rawg.io/api/games?key={API_KEY}&dates={today},{two_months_later}&platforms=7,18,187&ordering=-added&page_size=40")

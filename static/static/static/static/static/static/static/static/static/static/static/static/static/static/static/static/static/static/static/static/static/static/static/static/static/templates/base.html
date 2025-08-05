@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>{% block title %}Fantasy Land | {{ request.resolver_match.url_name }}{% endblock %}</title>
     {% load static %}
@@ -20,8 +21,8 @@
                     </a>
                 </div>
                 <ul class="mid-nav">
-                    <li><a href="/products">&#128230; Products</a></li>
-                    <li><a href="/suppliers">&#128666; Suppliers</a></li>
+                    <li><a href="/products">Products</a></li>
+                    <li><a href="/suppliers">Suppliers</a></li>
                 </ul>
             </div>
 
@@ -55,10 +56,10 @@
             <!-- Right Navigation -->
             <nav class="right-nav">
                 <ul>
-                    <li><a href="{% url 'MAKE_SALE' %}"> &#128228;Sales</a></li>
-                    <li><a href="{% url 'HOME' %}">&#127968; Home</a></li>
-                    <li><a href="{% url 'ABOUT' %}">&#128712; About</a></li>
-                    <li><a href="/admin/">&#128100; Admin</a></li>
+                    <li><a href="{% url 'MAKE_SALE' %}">Sales</a></li>
+                    <li><a href="{% url 'HOME' %}">Home</a></li>
+                    <li><a href="{% url 'ABOUT' %}">About</a></li>
+                    <li><a href="/admin/">Admin</a></li>
                 </ul>
             </nav>
 

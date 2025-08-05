@@ -10,18 +10,25 @@
 
     <!-- Header -->
     <header>
-        <div class="logo">
-             <a href="/">
-                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo img">
-            </a>
+    <div class="container">
+        <div class="left-section">
+            <div class="logo">
+                <a href="/">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                </a>
+            </div>
+            <ul class="mid-nav">
+                <li><a href="/products">Products</a></li>
+            </ul>
         </div>
-        <nav>
+        <nav class="right-nav"></nav>
             <ul>
                 <li><a href="/home">Home</a></li>
                 <li><a href="/home/about">About</a></li>
             </ul>
-        </nav>
-    </header>
+               </nav>
+        </div>
+            </header>
 
     <!-- Page-specific content will go here -->
      <br>

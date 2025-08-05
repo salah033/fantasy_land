@@ -30,7 +30,7 @@
 
     <li><a href="{% url 'PRODUCTS' %}">🛒 Products</a></li>
     <li><a href="{% url 'SUPPLIERS' %}">📦 Suppliers</a></li>
-    <li><a href="{% url 'SHOP' %}">🏬 Shop</a></li>
+    <li><a href="{% url 'COSTUMERS' %}">👤 Costumers</a></li>
 
     <!-- Sales Section -->
     <li class="has-submenu">
@@ -75,6 +75,7 @@
                     <select name="type" class="search-select">
                         <option value="products" selected>Products</option>
                         <option value="suppliers">Suppliers</option>
+                        <option value="costumers">Costumers</option>
                     </select>
                     <input type="text" name="q" placeholder="Search..." required>
                     <button type="submit">🔍</button>

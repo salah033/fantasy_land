@@ -5,7 +5,7 @@
 
 <div class="product-banner">        
     {% for prod in product %} 
-    {% if prod.active %}
+    
         <a href="{% url 'PRODUCT_DETAIL' prod.id %}">
             <div class="product-card">
                 <img src = "{{prod.photo.url}}" alt ="{{prod.title}}"/>
@@ -15,7 +15,7 @@
                     </div>
             </div>
         </a>
-    {%endif%}    
+       
     {% endfor %}
 </div>
 {% endblock content %}

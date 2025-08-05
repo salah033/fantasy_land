@@ -9,10 +9,10 @@
 <!-- CSRF token (outside form) for JavaScript -->
 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-<div class="card-option" onclick="selectCategory_show('note', this)">📝 Notes</div>
-<div class="card-option" onclick="selectCategory_show('shop_order', this)">🛒 Shop Orders</div>
-<div class="card-option" onclick="selectCategory_show('customer', this)">👤 Costumer</div>
-<div class="card-option" onclick="selectCategory_show('customer_order', this)">📦 Costumer Orders</div>
+<div class="card-option" onclick="selectCategory_show('notes', this)">📝 Notes</div>
+<div class="card-option" onclick="selectCategory_show('shop_orders', this)">🛒 Shop Orders</div>
+<div class="card-option" onclick="selectCategory_show('customers', this)">👤 Costumer</div>
+<div class="card-option" onclick="selectCategory_show('customer_orders', this)">📦 Costumer Orders</div>
 
 <!-- AJAX will inject content here -->
 <div id="memo-content" class="memo-section"></div>

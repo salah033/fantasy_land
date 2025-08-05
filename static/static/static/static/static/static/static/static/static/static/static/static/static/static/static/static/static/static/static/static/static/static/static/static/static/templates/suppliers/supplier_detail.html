@@ -14,19 +14,19 @@
         <h2>{{ supplier.name }}</h2>
 
         {% if supplier.phone %}
-            <p class="info-label">📞 {{ supplier.phone }}</p>
+            <p class="info-label">{{ supplier.phone }}</p>
         {% else %}
             <p class="info-missing">No phone available for this supplier</p>
         {% endif %}
 
         {% if supplier.email %}
-            <p class="info-label">📧 {{ supplier.email }}</p>
+            <p class="info-label">{{ supplier.email }}</p>
         {% else %}
             <p class="info-missing">No email available for this supplier</p>
         {% endif %}
 
         {% if products %}
-            <p class="section-title">🧾 Purchased products:</p>
+            <p class="section-title">Purchased products:</p>
             <ul class="product-list">
                 {% for product in products %}
                     <li><a href="{% url 'PRODUCT_DETAIL' product.id %}">{{ product.name }}</a></li>

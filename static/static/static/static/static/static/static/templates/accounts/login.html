@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 <div id="loginBox" class="login-container {% if messages %}shake{% endif %}">
-
     <h2>Login</h2>
 
     {% if next %}
-        <p class="login-info">Please login to your account to access: <strong>{{ next }}</strong></p>
+        <p class="login-info">Please login to access: <strong>{{ next }}</strong></p>
     {% endif %}
 
     {% if messages %}
@@ -15,44 +16,15 @@
         {% endfor %}
     {% endif %}
 
-    <form method="POST" class="login-form" id="loginForm">
+    <form method="POST" class="login-form">
         {% csrf_token %}
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
+        <input type="text" name="username" id="username" required>
 
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" required>
 
         <button type="submit">Login</button>
     </form>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const loginForm = document.getElementById('loginForm');
-        const successIcon = document.getElementById('successIcon');
-
-        loginForm.addEventListener('submit', function (e) {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Just client-side check for example
-            if (!username || !password) {
-                // prevent empty login
-                e.preventDefault();
-                document.getElementById('loginBox').classList.add('shake');
-                setTimeout(() => {
-                    document.getElementById('loginBox').classList.remove('shake');
-                }, 400);
-            } else {
-                // Show success ✔️
-                successIcon.style.display = 'block';
-            }
-        });
-    });
-</script>
-
-
-    <!-- Success icon placeholder -->
-    <div id="successIcon" class="success-icon">✔️</div>
 </div>
 {% endblock content %}

@@ -7,14 +7,22 @@
 
 <h1 class="page-title">🛒 Sales Page</h1>
 
+<form method="get" class="barcode-form">
 <input
   type="text" 
   id="barcodeInput"
   class="barcode-input"
-  placeholder="🔍 Scan barcode here..."
+  placeholder="🔍 Scan barcode here or reference ... "
   autofocus
   autocomplete="off"
 />
+  <button type="submit" class="btn filter-btn">OK</button>
+
+</form>
+
+
+
+
 
 <a href="{% url 'ALL_RECEIPTS' %}" class="receipt-link">📄 View All Receipts</a>
 

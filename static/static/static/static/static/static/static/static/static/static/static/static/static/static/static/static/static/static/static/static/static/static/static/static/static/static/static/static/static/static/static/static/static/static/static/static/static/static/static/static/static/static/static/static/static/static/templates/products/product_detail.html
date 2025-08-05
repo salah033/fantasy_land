@@ -12,9 +12,9 @@
         <p class="price">{{ product.price }} DT</p>
 
         {% if product.description %}
-        <p class="description">{{ product.description }}</p>
+            <p class="description">{{ product.description }}</p>
         {% else %}
-        <p class="description">Aucune description disponible pour ce produit.</p>
+            <p class="description">Aucune description disponible pour ce produit.</p>
         {% endif %}
 
         <a href="{% url 'PRODUCTS' %}" class="back-button">← Retour aux produits</a>

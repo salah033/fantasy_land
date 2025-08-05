@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
+  <div class="page-container">
     <!-- Header -->
     <header>
         <div class="container">
@@ -67,16 +67,14 @@
 
     <!-- Main Content -->
     <main>
-        <br><br>
         {% block content %}
         {% endblock content %}
-        <br><br><br>
     </main>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Fantasy Land. All rights reserved.</p>
     </footer>
-
+</div>
 </body>
 </html>

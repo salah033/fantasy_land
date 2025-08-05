@@ -4,10 +4,14 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<p>
+<div class="button11-container">
+    <a href="{% url 'ALL_RECEIPTS' %}" class="receipt-button">📄 View All Receipts</a>
+    <a href="{% url 'CLOSE_DRAWER' %}" class="receipt-button">📜 Close Drawer</a>
+</div>
 
 <h1 class="page-title">🛒 Sales Page</h1>
 
-<form method="get" class="barcode-form">
 <input
   type="text" 
   id="barcodeInput"
@@ -16,15 +20,6 @@
   autofocus
   autocomplete="off"
 />
-  <button type="submit" class="btn filter-btn">OK</button>
-
-</form>
-
-
-
-
-
-<a href="{% url 'ALL_RECEIPTS' %}" class="receipt-link">📄 View All Receipts</a>
 
 <table id="saleTable" class="sale-table" aria-label="Products added to sale">
   <thead>
@@ -43,6 +38,17 @@
 <div id="totalAmount" class="total-amount">Total: 0 DT</div>
 
 <button id="confirmSaleBtn" class="confirm-btn">✅ Confirm Sale</button>
+
+<!-- ✅ Stylish Modal HTML -->
+<div id="customModal" class="modal">
+  <div class="modal-content">
+    <p id="modalMessage"></p>
+    <div class="modal-actions">
+      <button id="modalCancel">Cancel</button>
+      <button id="modalConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
 
 <script src="{% static 'js/barcode-scan.js' %}"></script>
 

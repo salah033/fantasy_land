@@ -22,6 +22,96 @@
   border-color: #007bff;
   font-weight: bold;
 }
+/* Style all note-section ul */
+.note-section ul {
+  list-style: none;
+  padding-left: 0;
+  max-width: 520px;
+  margin: 10px 0 30px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Style each li in the ul */
+.note-section ul li {
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label text stays on top, input/textarea below */
+.note-section ul li input[type="text"],
+.note-section ul li input[type="number"],
+.note-section ul li input[type="date"],
+.note-section ul li textarea {
+  margin-top: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  resize: vertical; /* for textarea */
+}
+
+/* Focus style for inputs and textarea */
+.note-section ul li input[type="text"]:focus,
+.note-section ul li input[type="number"]:focus,
+.note-section ul li input[type="date"]:focus,
+.note-section ul li textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #f9fbff;
+}
+
+/* Checkbox styling for 'Paid in advance' */
+.note-section ul li input[type="checkbox"] {
+  margin-top: 8px;
+  width: auto;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+/* Keep the * and ** symbols colored red but don't affect layout */
+.note-section ul li::after {
+  content: attr(data-required);
+  color: red;
+  margin-left: 4px;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* Since you use * and ** inline, no need to override them.
+   If you want consistent styling, use data-required attribute like this in HTML:
+   <li data-required="*"> ... </li>
+*/
+
+/* Responsive width for smaller devices */
+@media (max-width: 600px) {
+  .note-section ul {
+    max-width: 100%;
+  }
+}
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
 </style>
 <form id="shop_notes_form" method="POST" action="{% url 'SUBMIT_FORM' %}" autocomplete="off">
   {% csrf_token %}
@@ -42,14 +132,14 @@
   <!-- Note Section -->
   <div id="noteSection" class="note-section">
     <ul>
-    <li>Note : <input type="text" id="noteInput" name="noteInput" class="note-input" placeholder="Type your note(required)" autocomplete="off" >*</li>
+    <li>Note : *<input type="text" id="noteInput" name="noteInput" class="note-input" placeholder="Type your note(required)" autocomplete="off" ></li>
     </ul>
   </div>
 
   <!-- Shop Order Section -->
   <div id="shopOrderSection" class="note-section" style="display:none;">
     <ul>
-    <li>Product : <input type="text" id="productName" name="product_name" placeholder="Product Name(required)" autocomplete="off">*</li>
+    <li>Product : *<input type="text" id="productName" name="product_name" placeholder="Product Name(required)" autocomplete="off"></li>
     <li>Quantity : <input type="number" id="quantity" name="quantity" placeholder="Quantity" autocomplete="off"></li>
     <li>Date : <input type="date" id="orderDate" name="shop_order_date" placeholder="Date of Order" autocomplete="off"></li>
     <li>Notes :<textarea id="shopordernotes" name="shop_order_notes" placeholder="Any notes about the order" autocomplete="off"></textarea></li>
@@ -59,8 +149,8 @@
   <!-- Customer Section -->
   <div id="customerSection" class="note-section" style="display:none;">
     <ul>
-    <li>Name : <input type="text" id="customerName" name="customer_name" placeholder="Customer Name(required)" autocomplete="off" >*</li>
-    <li>Phone : <input type="text" id="customerPhone" name="customer_phone" placeholder="Customer Phone Number(required)" autocomplete="off">*</li>
+    <li>Name : *<input type="text" id="customerName" name="customer_name" placeholder="Customer Name(required)" autocomplete="off" ></li>
+    <li>Phone : *<input type="text" id="customerPhone" name="customer_phone" placeholder="Customer Phone Number(required)" autocomplete="off"></li>
     <li>Notes : <textarea id="customerNotes" name="customer_notes" placeholder="Any notes about the customer" autocomplete="off"></textarea></li>
     </ul>
   </div>
@@ -68,13 +158,12 @@
   <!-- Customer Order Section -->
   <div id="customerOrderSection" class="note-section" style="display:none;">
     <ul>
-    <li>Name : <input type="text" id="customerOrderName" name="customer_order_name" placeholder="Customer Name(required)" autocomplete="off">*</li>
-    <li>Phone : <input type="text" id="customeOrderrPhone" name="customer_order_phone" placeholder="Customer Phone Number(required)" autocomplete="off">*</li>
-    <li>Product : <input type="text" id="orderProduct" name="order_product" placeholder="Product(required)" autocomplete="off">*</li>
+    <li>Costumer ID : *<input type="text" id="CustomerID" name="costumer_ID" placeholder="Customer ID (required)" autocomplete="off"></li>
+    <li>Product : *<input type="text" id="orderProduct" name="order_product" placeholder="Product(required)" autocomplete="off"></li>
     <li>Quantity : <input type="number" id="cusorderquantity" name="cus_quantity" placeholder="Quantity" autocomplete="off"></li>
     <li>Date : <input type="date" id="cusorderDate" name="customer_order_date" placeholder="Date of Order" autocomplete="off"></li>
-    <li>Paid in advance <input type="checkbox" id="paidCheckbox" name="is_paid" autocomplete="off">**</li>
-    <li>Amount paid <input type="number" id="amountPaid" name="amount_paid" placeholder="Amount Paid(works only if Paid in advance is checked)" autocomplete="off"></li>
+    <li>Paid in advance **<input type="checkbox" id="paidCheckbox" name="is_paid" autocomplete="off"></li>
+    <li>Amount paid **<input type="number" id="amountPaid" name="amount_paid" placeholder="Amount Paid(works only if Paid in advance is checked)" autocomplete="off"></li>
     <li>Notes : <textarea id="orderNotes" name="order_notes" placeholder="Additional Notes" autocomplete="off"></textarea></li>
     </ul>
     <p>Please note that 'Amount Paid' field will work only if 'Paid n advance' is checked (**) </p>

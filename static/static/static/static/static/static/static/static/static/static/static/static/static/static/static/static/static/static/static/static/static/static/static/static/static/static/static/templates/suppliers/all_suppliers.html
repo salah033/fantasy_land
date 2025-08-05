@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>All_SUPPLIERS</h1>
+<link rel="stylesheet" href="{% static 'css/suppliers.css' %}">
 
-<div class="product-banner">        
-    {% for supp in supplier %} 
-    <a href="{% url 'SUPPLIER_DETAIL' supp.id %}">
-        <div class="product-card">
-            <img src = "{{supp.photo.url}}" alt ="{{supp.title}}"/>
-                <div class="product-info">
+<h1 class="page-title">📦 All Suppliers</h1>
+
+<div class="supplier-banner">        
+    {% for supp in supplier %}
+        <a href="{% url 'SUPPLIER_DETAIL' supp.id %}">
+            <div class="supplier-card">
+                <img src="{{ supp.photo.url }}" alt="{{ supp.name }}">
+                <div class="supplier-info">
                     <h3>{{ supp.name }}</h3>
                     <p>{{ supp.location }}</p>
                 </div>
-        </div>
-    </a>
+            </div>
+        </a>
     {% endfor %}
 </div>
 {% endblock content %}

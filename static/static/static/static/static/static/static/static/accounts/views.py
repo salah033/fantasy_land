@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
+@login_required
 def accounts_home(request) :
     return render (request , 'accounts/home.html')
 
@@ -17,7 +22,7 @@ def accounts_login(request) :
 
         if user is not None:
             login(request, user)
-            return redirect(next_url)  # Redirect to a dashboard or home page
+            return redirect(next_url)  
         else:
             messages.error(request, 'Invalid username or password.')
     
@@ -28,4 +33,19 @@ def accounts_login(request) :
 
 def accounts_register(request) :
     return render (request , 'accounts/register.html')
+
+@login_required
+def accounts_logout (request) : 
+    print (request)
+    if request.method == "POST":
+        
+
+        logout(request)
+        return JsonResponse({'redirect_url': reverse('ACCOUNTS_LOGIN')})
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def user_dashboard (request) : 
+    return render (request, 'accounts/dashboard.html')
 # Create your views here.

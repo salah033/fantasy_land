@@ -11,4 +11,6 @@ urlpatterns = [
     path('memo/', views.memo_form, name="MEMO_FORM"), 
     path('show_memo/', views.show_memos, name='SHOW_MEMO'),
     path('memo_edit/<str:category>/<int:pk>/', views.edit_memo, name='EDIT_MEMO'),
+    path('costumers/', views.show_costumers, name='COSTUMERS'),
+    path('costumer/<int:pk>', views.customer_details, name='COSTUMER_DETAILS'),
     ]

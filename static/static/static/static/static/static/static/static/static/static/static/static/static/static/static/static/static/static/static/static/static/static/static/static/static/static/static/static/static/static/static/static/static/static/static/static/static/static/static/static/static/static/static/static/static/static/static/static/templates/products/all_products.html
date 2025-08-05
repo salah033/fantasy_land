@@ -2,9 +2,20 @@
 
 {% block content %}
 <h1>All_PRODUCTS</h1>
-{% for product in products %} 
-<p> {{product.name}} | {{product.price}}DT</p>
-<img src = "{{product.photo}}" alt ="{{product.title}}"/>  
-     
-{% endfor %}
+
+<div class="product-banner">        
+    {% for prod in product %} 
+    {% if prod.active %}
+        <a href="{% url 'PRODUCT_DETAIL' prod.id %}">
+            <div class="product-card">
+                <img src = "{{prod.photo.url}}" alt ="{{prod.title}}"/>
+                    <div class="product-info">
+                        <h3>{{ prod.name }}</h3>
+                        <p>{{ prod.price }} DT</p>
+                    </div>
+            </div>
+        </a>
+    {%endif%}    
+    {% endfor %}
+</div>
 {% endblock content %}

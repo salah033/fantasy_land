@@ -4,10 +4,11 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+<p>
+<a href="{% url 'ALL_RECEIPTS' %}" class="receipt-button">📄 View All Receipts</a></p>
+<a href="{% url 'CLOSE_DRAWER' %}" class="receipt-button">📜 Close </a></p>
 <h1 class="page-title">🛒 Sales Page</h1>
 
-<form method="get" class="barcode-form">
 <input
   type="text" 
   id="barcodeInput"
@@ -16,15 +17,8 @@
   autofocus
   autocomplete="off"
 />
-  <button type="submit" class="btn filter-btn">OK</button>
-
-</form>
 
 
-
-
-
-<a href="{% url 'ALL_RECEIPTS' %}" class="receipt-link">📄 View All Receipts</a>
 
 <table id="saleTable" class="sale-table" aria-label="Products added to sale">
   <thead>
