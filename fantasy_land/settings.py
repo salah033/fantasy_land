@@ -30,7 +30,7 @@ GROQ_API_KEY = config('GROQ_API_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['fantasy-land.onrender.com','localhost','127.0.0.1']
 
 # Application definition
 
