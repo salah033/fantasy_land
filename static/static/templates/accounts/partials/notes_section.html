@@ -1,0 +1,20 @@
+<h3>📝 Notes Section</h3>
+{% if notes %}
+  {% for note in notes %}
+    <a href="{% url 'EDIT_MEMO' note.type|lower note.id %}">
+            <div class="note-card">
+                    <div class="note-info">
+                        <p>{{ note.id }}</p> 
+                        <h3>{{ note.body }}</h3> 
+                        <p>🖋️ Edit</p>
+                        
+                        
+    
+                    </div>
+            </div>
+            
+        </a>
+  {% endfor %}
+{% else %}
+  <p>No notes found.</p>
+{% endif %}

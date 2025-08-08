@@ -1,0 +1,17 @@
+<h3>📝 Shop Orders Section</h3>
+{% if shop_orders %}
+  {% for order in shop_orders %}
+  <a href="{% url 'EDIT_MEMO' order.type|lower order.id %}">
+    <div class="shororder-card">
+    <div class="shororder-info">
+    <p>{{ order.prod_order_name }}</p>
+    <p>{{ order.prod_order_qty }}</p>
+
+                    </div>
+            </div>
+          </a>
+        
+  {% endfor %}
+{% else %}
+  <p>No Orders found.</p>
+{% endif %}

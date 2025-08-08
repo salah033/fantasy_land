@@ -65,7 +65,7 @@ def submit_user_note (request) :
             
             body = request.POST.get('noteInput', '')
             if not body : 
-                return HttpResponse("Plese fill the Required fields*")
+                return HttpResponse("Please fill the Required fields*")
 
             form  = UserNote.objects.create(employee=user_name,
                                             body=body,)
@@ -84,7 +84,7 @@ def submit_user_note (request) :
 
             prod_name = request.POST.get('product_name', '')
             if not prod_name : 
-                return HttpResponse("Plese fill the Required fields*")
+                return HttpResponse("Please fill the Required fields*")
             try:
                 prod_qty = int(request.POST.get('quantity', 1) or 1)
             except ValueError:
@@ -102,7 +102,7 @@ def submit_user_note (request) :
             cus_phone = request.POST.get('customer_phone','')
 
             if not cus_phone or not cus_phone : 
-                return HttpResponse("Plese fill the Required fields*")
+                return HttpResponse("Please fill the Required fields*")
             body = request.POST.get('customer_notes','')
             try : 
                 form = UserCustomer.objects.create(employee=user_name,
@@ -128,7 +128,7 @@ def submit_user_note (request) :
             except ValueError:
                 cus_id = None
             if not isinstance(cus_id, int): 
-                return HttpResponse("Plese fill the COSTUMER ID FIELD WITH NUMBERS ONLY***")
+                return HttpResponse("Please fill the COSTUMER ID FIELD WITH NUMBERS ONLY***")
             
             costomer = get_object_or_404(UserCustomer, id=cus_id)            
 
@@ -168,12 +168,16 @@ def submit_user_note (request) :
 @csrf_exempt
 @login_required
 def show_memos (request) :
-
+    #if request.method == 'GET':
+        #print ('GET')
+        #print (request.GET.get('id_input',''))
     if request.method == 'POST':
         category = request.POST.get('category')
 
         if category == 'notes':
-            notes = UserNote.objects.all().order_by('is_done')
+            #x = request.GET.get('id_input','')
+            #print (x)
+            notes = UserNote.objects.filter(employee=request.user).order_by('is_done')
             html = render_to_string('accounts/partials/notes_section.html', {'notes': notes})
             return JsonResponse({'html': html})
 
@@ -278,7 +282,7 @@ def edit_memo (request, category, pk) :
             return redirect('SHOW_MEMO')
         
         else : 
-            cus_id = request.POST.get('costumer_id') 
+            #cus_id = request.POST.get('costumer_id')
             try:
                 cus_id = int(request.POST.get('costumer_id', None) or None)
             except ValueError:
@@ -355,3 +359,5 @@ def customer_details (request, pk) :
                'orders' : orders}
 
     return render (request, 'accounts/customer_details.html', context)
+
+

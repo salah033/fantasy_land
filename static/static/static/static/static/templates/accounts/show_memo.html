@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/memos.css' %}">
+
+<h2>Pick a Category</h2>
+<form method="POST" id="categoryForm" action="{% url 'SHOW_MEMO' %}">
+  {% csrf_token %}
+  <input type="hidden" name="category" id="categoryInput_show">
+  <div class="card-option" onclick="selectCategory_show('notes', this)">📝 Notes</div>
+  <div class="card-option" onclick="selectCategory_show('shop_orders', this)">🛒 Shop Orders</div>
+  <div class="card-option" onclick="selectCategory_show('customers', this)">👤 Customer</div>
+  <div class="card-option" onclick="selectCategory_show('customer_orders', this)">📦 Customer Orders</div>
+</form>
+
+<!-- Sections -->
+<div id="notes" class="memo-section">
+  <h3>📝 Notes Section</h3>
+</div>
+<div id="shop_orders" class="memo-section" style="display:none;">
+  <h3>🛒 Shop Orders Section</h3>
+</div>
+<div id="customers" class="memo-section" style="display:none;">
+  <h3>👤 Customer Section</h3>
+</div>
+<div id="customer_orders" class="memo-section" style="display:none;">
+  <h3>📦 Customer Orders Section</h3>
+</div>
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'js/show_memo.js' %}"></script>
+
+{% endblock content %}

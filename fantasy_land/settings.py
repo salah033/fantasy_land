@@ -24,6 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
+GROQ_API_KEY = config('GROQ_API_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -46,7 +48,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'search.apps.SearchConfig',
     'sales.apps.SalesConfig',
-    'shop.apps.ShopConfig',
+    'chatbot.apps.ChatbotConfig',
     'accounts.apps.AccountsConfig'
     ]
 
@@ -126,7 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'fantasy_land/static')]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

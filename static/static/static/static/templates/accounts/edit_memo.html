@@ -1,0 +1,75 @@
+EDIT_MEMO
+
+{% if object.type|lower == 'note' %}
+<form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
+  {% csrf_token %}
+<ul>
+    <li>Note : <textarea name="body" rows="10" cols="50" required>{{ object.body }}</textarea></li>
+    <li>Done : <input type="checkbox" id="isdonenote" name="is_done_note" autocomplete="off"
+            {% if object.is_done %}checked{% endif %}></li>
+</ul>
+  <br>
+  <button type="submit">Save</button>
+</form>
+
+{% elif object.type|lower ==  'shop_order' %}
+
+<form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
+  {% csrf_token %}
+  <ul>
+
+    <li>Product: <input type="text" id="productName" name="product_name" value="{{ object.prod_order_name }}" required>*</li>    
+    <li>Quantity : <input type="number" id="quantity" name="quantity" value="{{ object.prod_order_qty }}" ></li>
+    <li>Date : <input type="date" id="orderDate" name="shop_order_date" value="{{ object.order_date|date:'Y-m-d'}}"></li>
+    <li>Notes :<textarea id="shopordernotes" name="shop_order_notes">{{ object.body }}</textarea></li>
+    <li>Done : <input type="checkbox" id="isdoneshoporder" name="is_done_shop_order" autocomplete="off"
+            {% if object.is_done %}checked{% endif %}></li>
+  </ul>
+  <br>
+  <button type="submit">Save</button>
+</form>
+
+{% elif object.type|lower ==  'customer' %}
+
+<form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
+  {% csrf_token %}
+
+  <ul>
+    <li>Name: <input type="text" id="customerName" name="customer_name" value="{{ object.customer_name }}" required>*</li>    
+    <li>Phone: <input type="text" id="customerPhone" name="customer_phone" value="{{ object.customer_phone }}" required>*</li>    
+    <li>Notes :<textarea id="customerNotes" name="customer_notes">{{ object.body }}</textarea></li>
+  </ul>
+
+    <br>
+  <button type="submit">Save</button>
+</form>
+
+{% else %}
+<form method="POST" action="{% url 'EDIT_MEMO' object.type|lower object.id %}">
+  {% csrf_token %}
+
+  <ul>
+  
+    <li>Name: <input type="text" id="ordercustomerName" name="customer_name" value="{{ object.customer_name }}" required>*</li>    
+    <li>Phone: <input type="text" id="ordercustomerPhone" name="customer_phone" value="{{ object.customer_phone }}" required>*</li>    
+    <li>Product: <input type="text" id="orderproductName" name="product_name" value="{{ object.product_order }}" required>*</li>    
+    <li>Quantity : <input type="number" id="ordercusquantity" name="quantity" value="{{ object.quantity_order }}" ></li>
+    <li>Date : <input type="date" id="cusorderDate" name="customer_order_date" value="{{ object.order_date|date:'Y-m-d'}}"></li>
+    <li>Paid in advance <input type="checkbox" id="isdonecusorder" name="is_paid_customer_order" autocomplete="off"
+            {% if object.is_paid %}checked{% endif %}></li>
+    <li>Amount paid : <input type="number" id="cusorderquantity" name="amount_customer" value="{{ object.amount_paid }}" ></li>
+    <li>Notes :<textarea id="cusordernotes" name="order_order_notes">{{ object.body }}</textarea></li>
+    <li>Done : <input type="checkbox" id="isdonecusorder" name="is_done_customer_order" autocomplete="off"
+            {% if object.is_done %}checked{% endif %}></li>
+  </ul>
+
+      <br>
+  <button type="submit">Save</button>
+</form>
+
+
+    {% endif %}
+
+
+
+

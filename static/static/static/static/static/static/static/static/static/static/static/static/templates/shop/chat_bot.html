@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product ChatBot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #chat-box {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+            margin: 0 auto 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .bot, .user {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+
+        .bot {
+            background-color: #e3fce3;
+            color: #2d6a2d;
+            text-align: left;
+        }
+
+        .user {
+            background-color: #e3e9fc;
+            color: #2d4a8a;
+            text-align: right;
+            margin-left: auto;
+        }
+
+        #chat-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ask About a Product</h2>
+
+    <div id="chat-box"></div>
+
+    <div id="chat-controls">
+        <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const csrfToken = "{{ csrf_token }}";
+
+        function appendMessage(sender, text) {
+            const div = document.createElement("div");
+            div.className = sender;
+            div.innerText = text;
+            document.getElementById("chat-box").appendChild(div);
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("user-input");
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            appendMessage("user", message);
+
+            fetch("/shop/ask/", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "message=" + encodeURIComponent(message)
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage("bot", data.response);
+            });
+
+            input.value = "";
+        }
+
+        // Enter key to send
+        document.getElementById("user-input").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+
+</body>
+</html>

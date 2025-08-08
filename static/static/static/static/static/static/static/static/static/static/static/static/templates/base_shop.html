@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Land - Premium Gaming Electronics</title>
+    {% load static %}
+    <link rel="stylesheet" href="css/hf_shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <span class="logo-fantasy">Fantasy</span>
+                    <span class="logo-land">Land</span>
+                    <span class="logo-tagline">Game Beyond Limits</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link home-link"><i class="fas fa-home"></i> Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content would go here -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <a href="index.html" class="logo">
+                    <span class="logo-fantasy">Fantasy</span>
+                    <span class="logo-land">Land</span>
+                </a>
+                <p class="footer-tagline">Your portal to gaming paradise</p>
+            </div>
+            
+            <div class="footer-social">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitch"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-legal">
+                <p>&copy; 2023 Fantasy Land. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Shipping Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

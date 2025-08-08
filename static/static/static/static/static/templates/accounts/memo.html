@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+.card-option {
+  display: inline-block;
+  border: 2px solid #ccc;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  min-width: 130px;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+.card-option:hover {
+  background-color: #f0f8ff;
+  border-color: #007bff;
+}
+.card-option.selected {
+  background-color: #e6f0ff;
+  border-color: #007bff;
+  font-weight: bold;
+}
+</style>
+<form id="shop_notes_form" method="POST" action="{% url 'SUBMIT_FORM' %}" autocomplete="off">
+  {% csrf_token %}
+
+<label>Select Category:</label><br>
+<input type="hidden" name="type" id="categoryInput" value="note">
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+  <div class="card-option selected" onclick="selectCategory('note', this)">📝 Note</div>
+  <div class="card-option" onclick="selectCategory('shop_order', this)">🛒 Shop Order</div>
+  <div class="card-option" onclick="selectCategory('customer', this)">👤 Customer</div>
+  <div class="card-option" onclick="selectCategory('customer_order', this)">📦 Customer Order</div>
+</div>
+
+
+
+
+  <!-- Note Section -->
+  <div id="noteSection" class="note-section">
+    <ul>
+    <li>Note : <input type="text" id="noteInput" name="noteInput" class="note-input" placeholder="Type your note(required)" autocomplete="off" >*</li>
+    <li>Done :<input type="checkbox" id="isdonenote" name="is_done_note" autocomplete="off">  </li>
+    </ul>
+  </div>
+
+  <!-- Shop Order Section -->
+  <div id="shopOrderSection" class="note-section" style="display:none;">
+    <ul>
+    <li>Product : <input type="text" id="productName" name="product_name" placeholder="Product Name(required)" autocomplete="off">*</li>
+    <li>Quantity : <input type="number" id="quantity" name="quantity" placeholder="Quantity" autocomplete="off"></li>
+    <li>Date : <input type="date" id="orderDate" name="shop_order_date" placeholder="Date of Order" autocomplete="off"></li>
+    <li>Notes :<textarea id="shopordernotes" name="shop_order_notes" placeholder="Any notes about the order" autocomplete="off"></textarea></li>
+    <li>Done :<input type="checkbox" id="isdoneshoporder" name="is_done_shop_order" autocomplete="off"></li>
+    </ul>
+  </div>
+
+  <!-- Customer Section -->
+  <div id="customerSection" class="note-section" style="display:none;">
+    <ul>
+    <li>Name : <input type="text" id="customerName" name="customer_name" placeholder="Customer Name(required)" autocomplete="off" >*</li>
+    <li>Phone : <input type="text" id="customerPhone" name="customer_phone" placeholder="Customer Phone Number(required)" autocomplete="off">*</li>
+    <li>Notes : <textarea id="customerNotes" name="customer_notes" placeholder="Any notes about the customer" autocomplete="off"></textarea></li>
+    </ul>
+  </div>
+
+  <!-- Customer Order Section -->
+  <div id="customerOrderSection" class="note-section" style="display:none;">
+    <ul>
+    <li>Name : <input type="text" id="customerOrderName" name="customer_order_name" placeholder="Customer Name(required)" autocomplete="off">*</li>
+    <li>Phone : <input type="text" id="customeOrderrPhone" name="customer_order_phone" placeholder="Customer Phone Number(required)" autocomplete="off">*</li>
+    <li>Product : <input type="text" id="orderProduct" name="order_product" placeholder="Product(required)" autocomplete="off">*</li>
+    <li>Date : <input type="date" id="cusorderDate" name="customer_order_date" placeholder="Date of Order" autocomplete="off"></li>
+    <li>Paid in advance <input type="checkbox" id="paidCheckbox" name="is_paid" autocomplete="off"></li>
+    <li>Amount Paid <input type="number" id="amountPaid" name="amount_paid" placeholder="Amount Paid(works only if Paid in advance is checked)" autocomplete="off"></li>
+    <li>Notes : <textarea id="orderNotes" name="order_notes" placeholder="Additional Notes" autocomplete="off"></textarea></li>
+    <li>Done : <input type="checkbox" id="isdonecustorder" name="is_done_cust_order" autocomplete="off"> Done</li>
+    </ul>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit">💾 Submit</button>
+</form>
+<p>Please make sure to fill fields with (*)</p>
+
+<script src="{% static 'js/create_memo.js' %}"></script>
+{% endblock content %}

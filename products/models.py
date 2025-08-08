@@ -25,6 +25,7 @@ class Products (models.Model) :
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     quantity = models.IntegerField()
     designation = models.TextField(max_length=100,null=True, blank=True)
+    abbreviation = models.CharField(max_length=100, blank=True, null=True)
     photo = models.ImageField(upload_to="products/", blank=True, null=True, default='no_photo.png') 
     active = models.BooleanField(default=True)
     supplier = models.ForeignKey('supplier.Suppliers', on_delete=models.SET_NULL, null=True, blank=True)

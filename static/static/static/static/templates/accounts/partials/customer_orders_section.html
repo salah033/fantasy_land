@@ -1,0 +1,19 @@
+<h3>📝 Costumer Orders Section</h3>
+{% if customer_orders %}
+  {% for corder in customer_orders %}
+    <a href="{% url 'EDIT_MEMO' corder.type|lower corder.id %}">
+
+  <div class="cusorder-card">
+                    <div class="cusorder-info">
+    <p>{{ corder.customer_name }}</p>
+    <p>{{ corder.product_order }}</p>
+
+        
+                    </div>
+            </div>
+            
+        </a>
+  {% endfor %}
+{% else %}
+  <p>No Orders found.</p>
+{% endif %}

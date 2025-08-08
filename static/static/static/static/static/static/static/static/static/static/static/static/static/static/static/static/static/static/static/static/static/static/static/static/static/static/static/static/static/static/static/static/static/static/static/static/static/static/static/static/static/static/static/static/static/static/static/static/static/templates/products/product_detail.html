@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="product-detail-container">
+    
+    <div class="product-detail-image">
+        <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+    </div>
+
+    <div class="product-detail-info">
+        <h2>{{ product.name }}</h2>
+        <p class="price">{{ product.price }} DT</p>
+
+        {% if product.description %}
+        <p class="description">{{ product.description }}</p>
+        {% else %}
+        <p class="description">Aucune description disponible pour ce produit.</p>
+        {% endif %}
+
+        <a href="{% url 'PRODUCTS' %}" class="back-button">← Retour aux produits</a>
+    </div>
+
+</div>
+{% endblock %}

@@ -38,7 +38,7 @@ class ProductAdmin(ImportExportModelAdmin) :
         'fields': ('price', 'quantity', 'supplier', 'active', 'purchase_date')
     }),
     ('Other Info', {
-        'fields': ('designation', 'photo')
+        'fields': ('designation', 'abbreviation', 'photo')
     })
                 )
     list_per_page = 20

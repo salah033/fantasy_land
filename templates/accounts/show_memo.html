@@ -13,6 +13,29 @@
 <div class="card-option" onclick="selectCategory_show('shop_orders', this)">🛒 Shop Orders</div>
 <div class="card-option" onclick="selectCategory_show('customers', this)">👤 Costumer</div>
 <div class="card-option" onclick="selectCategory_show('customer_orders', this)">📦 Costumer Orders</div>
+<!--
+<form method="get" class="filter-form">
+    <div class="form-group">
+        <label for="number_input">Sale ID:</label>
+        <input type="number" id="number_input" name="id_input" value="{{ request.GET.number }}" placeholder="Enter sale id">
+    </div>
+
+    <div class="form-group">
+        <label for="start_date">From:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}">
+    </div>
+
+    <div class="form-group">
+        <label for="end_date">To:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}">
+    </div>
+
+    <div class="form-buttons">
+        <button type="submit" class="btn filter-btn">Filter</button>
+        <a href="{% url 'ALL_RECEIPTS' %}" class="btn reset-btn">Reset</a>
+    </div>
+</form>
+-->
 
 <!-- AJAX will inject content here -->
 <div id="memo-content" class="memo-section"></div>
